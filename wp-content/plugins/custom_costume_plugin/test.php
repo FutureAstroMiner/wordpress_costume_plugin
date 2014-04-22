@@ -15,25 +15,24 @@ error_reporting(-1);
     
     
     
-//    $ims = imagescale($im, 1500, 1190, IMG_BICUBIC_FIXED);
+    $ims = imagescale($im, 1500, 1190, IMG_BICUBIC_FIXED);
     
     
     
     
-//    $im2 = imagecreatefromjpeg(getcwd() . '/images/head.jpg');
+    $im2 = imagecreatefromjpeg(getcwd() . '/images/head.jpg');
     
-//    $icm = imagecopymerge( $im , $im2 , 31 , 400 , 0 , 0 , imagesx($im2) , imagesy($im2) , 100 );
-//    
-//    echo('Image merged ');  
-//    
-//    $success = imagejpeg($icmm, getcwd() . '/images/test.jpeg');
+    imagecopymerge( $im , $im2 , 31 , 400 , 0 , 0 , imagesx($im2) , imagesy($im2) , 100 );
+    
+    echo('Image merged ');  
+    
+    $success = imagejpeg($im, getcwd() . '/images/test.jpg', 75);
 
 echo('Image saved <br>');    
     
     imagedestroy($im);
     imagedestroy($ims);
     imagedestroy($im2);
-    imagedestroy($icm);
-    
+       
     die(0);
     ?>
