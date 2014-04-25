@@ -26,11 +26,11 @@ error_reporting(-1);
 //    imagecopymerge( $im , $im2 , 31 , 400 , 0 , 0 , imagesx($im2) , imagesy($im2) , 100 );
     $dest_x = ( $sourcefile_width / 2 ) - ( $insertfile_width / 2 );
     $dest_y = ( $sourcefile_height / 2 ) - ( $insertfile_height / 2 ); 
-    imageCopyMerge($sourcefile_id, $insertfile_id,$dest_x,$dest_y,0,0,$insertfile_width,$insertfile_height,100);
+    imageCopyMerge($sourcefile_id2, $insertfile_id, 0, 0, 0, 0, $insertfile_width, $insertfile_height,100);
     
     echo('Image merged ');  
     
-    $success = imagejpeg($sourcefile_id, getcwd() . '/images/test.jpg', 75);
+    $success = imagejpeg($sourcefile_id2, getcwd() . '/images/test.jpg', 75);
 
 echo('Image saved <br>');    
 print "original:<hr><img src=\"$sourcefile_id\" width=\"300\"><br><br><br>new:<hr><img src=\"getcwd() . '/images/test.jpg'\">
@@ -44,6 +44,7 @@ print "original:<hr><img src=\"$sourcefile_id\" width=\"300\"><br><br><br>new:<h
 
     
     imagedestroy($sourcefile_id);
+    imagedestroy($sourcefile_id2);
     imagedestroy($insertfile_id);
        
     die(0);
