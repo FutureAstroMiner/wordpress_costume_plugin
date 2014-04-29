@@ -23,10 +23,19 @@ error_reporting(-1);
     $insertfile_width=imageSX($insertfile_id);
     $insertfile_height=imageSY($insertfile_id); 
     
+    $max_height = 80;
+    $max_width = 80;
+    if($insertfile_width > $max_width || $insertfile_height > $max_width) {
+    $aspect = $max_width / $max_height;
+           $width = intval($insertfile_width * $aspect);
+        $height = intval($insertfile_width / $aspect);
+  }
+    $insertfile_id2 = imagescale($insertfile_id, $width, $height, IMG_BICUBIC_FIXED);
+  
 //    imagecopymerge( $im , $im2 , 31 , 400 , 0 , 0 , imagesx($im2) , imagesy($im2) , 100 );
     $dest_x = ( $sourcefile_width / 2 ) - ( $insertfile_width / 2 );
     $dest_y = ( $sourcefile_height / 2 ) - ( $insertfile_height / 2 ); 
-    imageCopyMerge($sourcefile_id2, $insertfile_id, 0, 0, 0, 0, $insertfile_width, $insertfile_height,100);
+    imageCopyMerge($sourcefile_id2, $insertfile_id2, 31, 400, 0, 0, $insertfile_width, $insertfile_height,100);
     
     echo('Image merged ');  
     
