@@ -26,16 +26,22 @@ error_reporting(-1);
     $max_height = 80;
     $max_width = 80;
     if($insertfile_width > $max_width || $insertfile_height > $max_width) {
-    $aspect = $max_width / $max_height;
-           $width = intval($insertfile_width * $aspect);
-        $height = intval($insertfile_width / $aspect);
+    $aspect = $insertfile_width / $insertfile_height;
+    if($insertfile_width > $max_width) {
+           $width = $max_width * $aspect;
+           $height = $max_height;
+    } else {
+        $width = $max_width;
+        $height = $max_height / $aspect;
+    }
+    
   }
     $insertfile_id2 = imagescale($insertfile_id, $width, $height, IMG_BICUBIC_FIXED);
   
 //    imagecopymerge( $im , $im2 , 31 , 400 , 0 , 0 , imagesx($im2) , imagesy($im2) , 100 );
     $dest_x = ( $sourcefile_width / 2 ) - ( $insertfile_width / 2 );
     $dest_y = ( $sourcefile_height / 2 ) - ( $insertfile_height / 2 ); 
-    imageCopyMerge($sourcefile_id2, $insertfile_id2, 31, 400, 0, 0, $insertfile_width, $insertfile_height,100);
+    imageCopyMerge($sourcefile_id2, $insertfile_id2, 31, 400, 0, 0, $width, $height,100);
     
     echo('Image merged ');  
     
@@ -45,8 +51,8 @@ echo('Image saved <br>');
 print "original:<hr><img src=\"$sourcefile_id\" width=\"300\"><br><br><br>new:<hr><img src=\"getcwd() . '/images/test.jpg'\">
 <br>source width = $sourcefile_width
 <br>source height = $sourcefile_height
-<br>insert width = $insertfile_width
-<br>insert height = $insertfile_height
+<br>insert width = $width
+<br>insert height = $height
 
 <br>start point x = $dest_x
 <br>start point y = $dest_y";
