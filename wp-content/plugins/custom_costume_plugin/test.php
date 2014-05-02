@@ -15,7 +15,21 @@ echo getcwd() . "<br>";
 $insertfile_id = imageCreateFromJPEG(getcwd() . '/images/head.jpg');
 $sourcefile_id = imageCreateFromJPEG(getcwd() . '/images/background.jpg');
 
-$sourcefile_id2 = imagescale($sourcefile_id, 1500, 1190, IMG_BICUBIC_FIXED);
+$max_height = 1500;
+$max_width = 1150;
+$source_aspect = imagesx($sourcefile_id) / imagesy($sourcefile_id);
+if ($source_aspect > 1) {
+    $width = $max_width;
+    $height = $max_height / $source_aspect;
+} elseif ($source_aspect < 1) {
+    $width = $max_width * $source_aspect;
+    $height = $max_height;
+} else {
+    $width = $max_width;
+    $height = $max_height;
+}
+
+$sourcefile_id2 = imagescale($sourcefile_id, $width, $height, IMG_BICUBIC_FIXED);
 
 //    $im2 = imagecreatefromjpeg(getcwd() . '/images/head.jpg');
 $sourcefile_width = imageSX($sourcefile_id2);
@@ -29,13 +43,12 @@ if ($aspect > 1) {
     $width = $max_size;
     $height = $max_size / $aspect;
 } elseif ($aspect < 1) {
-    $width = $max_width * $aspect;
-    $height = $max_height;
+    $width = $max_size * $aspect;
+    $height = $max_size;
 } else {
     $width = $max_size;
     $height = $max_size;
 }
-
 
 $insertfile_id2 = imagescale($insertfile_id, $width, $height, IMG_BICUBIC_FIXED);
 
@@ -53,6 +66,7 @@ echo('Image saved <br>');
 print "original:<hr><img src=\"$sourcefile_id\" width=\"300\"><br><br><br>new:<hr><img src=\"getcwd() . '/images/test.jpg'\">
 <br>source width = $sourcefile_width
 <br>source height = $sourcefile_height
+    <br>source aspect = $source_aspect
 <br>insert width = $width
 <br>insert height = $height
 
