@@ -12,72 +12,57 @@ phpinfo();
 echo getcwd() . "<br>";
 
 //    $im = imagecreatefromjpeg(getcwd() . '/images/background.jpg');
-$insertfile_id = imageCreateFromJPEG(getcwd() . '/images/head.jpg');
-$sourcefile_id = imageCreateFromJPEG(getcwd() . '/images/background.jpg');
-
-$max_height = 1500;
-$max_width = 1150;
-$source_aspect = imagesx($sourcefile_id) / imagesy($sourcefile_id);
-if ($source_aspect > 1) {
-    $width = $max_width;
-    $height = $max_height / $source_aspect;
-} elseif ($source_aspect < 1) {
-    $width = $max_width * $source_aspect;
-    $height = $max_height;
-} else {
-    $width = $max_width;
-    $height = $max_height;
-}
-
-$sourcefile_id2 = imagescale($sourcefile_id, $width, $height, IMG_BICUBIC_FIXED);
-
-//    $im2 = imagecreatefromjpeg(getcwd() . '/images/head.jpg');
-$sourcefile_width = imageSX($sourcefile_id2);
-$sourcefile_height = imageSY($sourcefile_id2);
+$head_file = imageCreateFromJPEG(getcwd() . '/images/head.jpg');
+$background_file = imageCreateFromJPEG(getcwd() . '/images/background.jpg');
+//body, feet, legs, left hand, right hand
 
 
-$max_size = 160;
-$aspect = imagesx($insertfile_id)/ imagesy($insertfile_id);
-if ($aspect > 1) {
-    $width = $max_size;
-    $height = $max_size / $aspect;
-} elseif ($aspect < 1) {
-    $width = $max_size * $aspect;
-    $height = $max_size;
-} else {
-    $width = $max_size;
-    $height = $max_size;
-}
 
-$insertfile_id2 = imagescale($insertfile_id, $width, $height, IMG_BICUBIC_FIXED);
-$insertfile_width = imageSX($insertfile_id2);
-$insertfile_height = imageSY($insertfile_id2);
+$background_scaled = scale_image($background_file, 1150, 1500);
 
-//    imagecopymerge( $im , $im2 , 31 , 400 , 0 , 0 , imagesx($im2) , imagesy($im2) , 100 );
-$dest_x = ( $sourcefile_width / 2 ) - ( $insertfile_width / 2 );
-$dest_y = ( $sourcefile_height / 9 ) - ( $insertfile_height / 2 );
+$background_width = imageSX($background_scaled);
+$background_height = imageSY($background_scaled);
 
-imageCopyMerge($sourcefile_id2, $insertfile_id2, $dest_x, $dest_y, 0, 0, $width, $height, 100);
+$head_scaled = scale_image($head_file, 160, 160);
+$head_width = imageSX($head_scaled);
+$head_height = imageSY($head_scaled);
+
+$dest_x = ( $background_width / 2 ) - ( $head_width / 2 );
+$dest_y = ( $background_height / 9 ) - ( $head_height / 2 );
+
+imageCopyMerge($background_scaled, $head_scaled, $dest_x, $dest_y, 0, 0, $head_width, $head_height, 100);
 
 echo('Image merged ');
 
-$success = imagejpeg($sourcefile_id2, getcwd() . '/images/test.jpg', 75);
+$success = imagejpeg($background_scaled, getcwd() . '/images/test.jpg', 75);
 
 echo('Image saved <br>');
-print "original:<hr><img src=\"$sourcefile_id\" width=\"300\"><br><br><br>new:<hr><img src=\"getcwd() . '/images/test.jpg'\">
-<br>source width = $sourcefile_width
-<br>source height = $sourcefile_height
-    <br>source aspect = $source_aspect
-<br>insert width = $width
-<br>insert height = $height
+print "original:<hr><img src=\"$background_file\" width=\"300\"><br><br><br>new:<hr><img src=\"getcwd() . '/images/test.jpg'\">
+<br>source width = $background_width
+<br>source height = $background_height
 
 <br>start point x = $dest_x
 <br>start point y = $dest_y";
 
 
-imagedestroy($sourcefile_id);
-imagedestroy($sourcefile_id2);
-imagedestroy($insertfile_id);
+imagedestroy($background_file);
+imagedestroy($background_scaled);
+imagedestroy($head_file);
+
+function scale_image($image, $max_width, $max_height) {
+    $aspect = imagesx($image) / imagesy($image);
+    if ($aspect > 1) {
+    $width = $max_width;
+    $height = $max_height / $aspect;
+} elseif ($aspect < 1) {
+    $width = $max_width * $aspect;
+    $height = $max_height;
+} else {
+    $width = $max_width;
+    $height = $max_height;
+}
+return imagescale($image, $width, $height, IMG_BICUBIC_FIXED);
+}
 
 die(0);
 ?>
