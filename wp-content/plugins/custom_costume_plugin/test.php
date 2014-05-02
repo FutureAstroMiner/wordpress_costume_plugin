@@ -11,12 +11,14 @@ phpinfo();
 
 echo getcwd() . "<br>";
 
-//    $im = imagecreatefromjpeg(getcwd() . '/images/background.jpg');
 $head_file = imageCreateFromJPEG(getcwd() . '/images/head.jpg');
 $background_file = imageCreateFromJPEG(getcwd() . '/images/background.jpg');
 //body, feet, legs, left hand, right hand
-
-
+$body_file = imageCreateFromJPEG(getcwd() . '/images/body.jpg');
+$feet_file = imageCreateFromJPEG(getcwd() . '/images/feet.jpg');
+$legs_file = imageCreateFromJPEG(getcwd() . '/images/legs.jpg');
+$left_hand_file = imageCreateFromJPEG(getcwd() . '/images/lefthand.jpg');
+$right_hand_file = imageCreateFromJPEG(getcwd() . '/images/righthand.jpg');
 
 $background_scaled = scale_image($background_file, 1150, 1500);
 
@@ -48,6 +50,11 @@ print "original:<hr><img src=\"$background_file\" width=\"300\"><br><br><br>new:
 imagedestroy($background_file);
 imagedestroy($background_scaled);
 imagedestroy($head_file);
+imagedestroy($body_file);
+imagedestroy($legs_file);
+imagedestroy($feet_file);
+imagedestroy($left_hand_file);
+imagedestroy($right_hand_file);
 
 function scale_image($image, $max_width, $max_height) {
     $aspect = imagesx($image) / imagesy($image);
