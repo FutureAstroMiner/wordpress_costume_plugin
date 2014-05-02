@@ -34,11 +34,10 @@ $sourcefile_id2 = imagescale($sourcefile_id, $width, $height, IMG_BICUBIC_FIXED)
 //    $im2 = imagecreatefromjpeg(getcwd() . '/images/head.jpg');
 $sourcefile_width = imageSX($sourcefile_id2);
 $sourcefile_height = imageSY($sourcefile_id2);
-$insertfile_width = imageSX($insertfile_id);
-$insertfile_height = imageSY($insertfile_id);
+
 
 $max_size = 160;
-$aspect = $insertfile_width / $insertfile_height;
+$aspect = imagesx($insertfile_id)/ imagesy($insertfile_id);
 if ($aspect > 1) {
     $width = $max_size;
     $height = $max_size / $aspect;
@@ -51,10 +50,12 @@ if ($aspect > 1) {
 }
 
 $insertfile_id2 = imagescale($insertfile_id, $width, $height, IMG_BICUBIC_FIXED);
+$insertfile_width = imageSX($insertfile_id2);
+$insertfile_height = imageSY($insertfile_id2);
 
 //    imagecopymerge( $im , $im2 , 31 , 400 , 0 , 0 , imagesx($im2) , imagesy($im2) , 100 );
 $dest_x = ( $sourcefile_width / 2 ) - ( $insertfile_width / 2 );
-$dest_y = ( $sourcefile_height / 4 ) - ( $insertfile_height / 2 );
+$dest_y = ( $sourcefile_height / 9 ) - ( $insertfile_height / 2 );
 
 imageCopyMerge($sourcefile_id2, $insertfile_id2, $dest_x, $dest_y, 0, 0, $width, $height, 100);
 
