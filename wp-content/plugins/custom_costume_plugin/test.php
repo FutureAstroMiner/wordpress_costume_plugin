@@ -34,7 +34,59 @@ $dest_y = ( $background_height / 9 ) - ( $head_height / 2 );
 
 imageCopyMerge($background_scaled, $head_scaled, $dest_x, $dest_y, 0, 0, $head_width, $head_height, 100);
 
-echo('Image merged ');
+echo('Head merged <br>');
+
+$body_scaled = scale_image($body_file, 160, 160);
+$body_width = imagesx($body_scaled);
+$body_height = imagesy($body_scaled);
+
+imageCopyMerge($background_scaled, $body_scaled, $background_width /2, $background_height /2, 0, 0, $body_width, $body_height, 100);
+
+echo('Body merged <br>');
+
+$feet_scaled = scale_image($feet_file, 160, 160);
+$feet_width = imagesx($feet_scaled);
+$feet_height = imagesy($feet_scaled);
+
+$feetx = ( $background_width / 2 ) - ( $feet_width / 2 );
+$feety = ( $background_height ) - ( $feet_height);
+
+imageCopyMerge($background_scaled, $feet_scaled, $feetx, $feety, 0, 0, $feet_width, $feet_height, 100);
+
+echo('Feet merged <br>');
+
+$legs_scaled = scale_image($legs_file, 160, 160);
+$legs_width = imagesx($legs_scaled);
+$legs_height = imagesy($legs_scaled);
+
+$legsx = ( $background_width / 2) - ( $legs_width / 2 );
+$legsy = ( 3*$background_height / 4 ) - ( $feet_height / 2 );
+
+imageCopyMerge($background_scaled, $legs_scaled, $legsx, $legsy, 0, 0, $legs_width, $legs_height, 100);
+
+echo('Legs merged <br>');
+
+$left_hand_scaled = scale_image($left_hand_file, 160, 160);
+$left_hand_width = imagesx($left_hand_scaled);
+$left_hand_height = imagesy($left_hand_scaled);
+
+$left_handx = ( $background_width / 4) - ( $left_hand_width / 2 );
+$left_handy = ( $background_height / 2 ) - ( $left_hand_height / 2 );
+
+imageCopyMerge($background_scaled, $left_hand_scaled, $left_handx, $left_handy, 0, 0, $left_hand_width, $left_hand_height, 100);
+
+echo('Left hand merged <br>');
+
+$right_hand_scaled = scale_image($right_hand_file, 160, 160);
+$right_hand_width = imagesx($right_hand_scaled);
+$right_hand_height = imagesy($right_hand_scaled);
+
+$right_handx = ( 3*$background_width / 4) - ( $right_hand_width / 2 );
+$right_handy = ( $background_height / 2 ) - ( $right_hand_height / 2 );
+
+imageCopyMerge($background_scaled, $right_hand_scaled, $right_handx, $right_handy, 0, 0, $right_hand_width, $left_hand_height, 100);
+
+echo('Right hand merged <br>');
 
 $success = imagejpeg($background_scaled, getcwd() . '/images/test.jpg', 75);
 
