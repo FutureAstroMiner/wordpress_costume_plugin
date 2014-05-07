@@ -29,8 +29,8 @@
  * 
  */
 
-ini_set('display_startup_errors',1);
-ini_set('display_errors',1);
+ini_set('display_startup_errors', 1);
+ini_set('display_errors', 1);
 error_reporting(-1);
 
 if (!defined('MYPLUGIN_THEME_DIR'))
@@ -79,7 +79,6 @@ function on_activate() {
 
 register_uninstall_hook(__FILE__, 'on_uninstall');
 
-
 function on_uninstall() {
     if (!current_user_can('activate_plugins'))
         return;
@@ -87,7 +86,6 @@ function on_uninstall() {
 
     if (__FILE__ != WP_UNINSTALL_PLUGIN)
         return;
-
 }
 
 add_action('admin_menu', 'customcostume_admin_actions');
@@ -263,45 +261,9 @@ function myAjaxFunction() {
     $legss = $wpdb->get_row("SELECT * FROM {$wpdb->prefix}costumesdb WHERE id = '$legs'", ARRAY_A);
     $feets = $wpdb->get_row("SELECT * FROM {$wpdb->prefix}costumesdb WHERE id = '$feet'", ARRAY_A);
 
-//echo "Name ' $cname 'head ' $head 'Right hand ' $righthand 'Left hand ' $lefthand 'Body ' $body 'Legs ' $legs 'Feet ' $feet";
-//$headPictURL = $heads['pictUrl'];
-//
-//gettype($hands);
-//print_r($heads,true);
-//count($heads);
-//$testContent = ;
-    //Build up the post content from the values
-
-    $content = '<div id="costume"> 
-    <div id="lefthand"> 
-        <a href="http://' . $lhands['shopUrl'] . '">
-            <img src="' . $lhands['pictUrl'] . '" alt="Left Hand"></a>
-    </div>
-    <div id="righthand"> 
-        <a href="http://' . $rhands['shopUrl'] . '">
-            <img src="' . $rhands['pictUrl'] . '" alt="Right Hand"></a>
-    </div>
-    <div id="head"> 
-        <a href= "http://' . $heads['shopUrl'] . '">
-            <img src= "' . $heads['pictUrl'] . '" alt="Head"></a>
-    </div>
-    <div id="chest"> 
-        <a href="http://' . $bodys['shopUrl'] . '">
-            <img src="' . $bodys['pictUrl'] . '" alt="Body"></a>
-    </div>
-    <div id="legs"> 
-        <a href="http://' . $legss['shopUrl'] . '">
-            <img src="' . $legss['pictUrl'] . '" alt="Legs"></a>
-    </div>
-    <div id="feet"> 
-        <a href="http://' . $feets['shopUrl'] . '">
-            <img src="' . $feets['pictUrl'] . '" alt="Feet"></a>
-    </div>
-</div>';
     $post = array(
         'ping_status' => get_option('default_ping_status'),
         'post_author' => $user_ID, //The user ID number of the author.
-//TODO dynamically create the content and correct formatting.
         'post_content' => $content,
 //The full text of the post.
         'post_name' => $cname, // The name (slug) for your post
@@ -313,18 +275,101 @@ function myAjaxFunction() {
 
     $post_id = wp_insert_post($post);
     $wpdb->flush();
+    
+    //TODO Get image locations from database and load them as image resourses
+    //TODO Change post content once image is made.
 
-    /* Attempt to open image */
-    $im = imagecreatefromjpeg('http://localhost/wp-content/plugins/custom_costume_plugin/images/background.jpg');
+    //Load image resources
+    $head_file = imageCreateFromJPEG(getcwd() . '/images/head.jpg');
+    $background_file = imageCreateFromJPEG(getcwd() . '/images/background.jpg');
+    $body_file = imageCreateFromJPEG(getcwd() . '/images/body.jpg');
+    $feet_file = imageCreateFromJPEG(getcwd() . '/images/feet.jpg');
+    $legs_file = imageCreateFromJPEG(getcwd() . '/images/legs.jpg');
+    $left_hand_file = imageCreateFromJPEG(getcwd() . '/images/lefthand.jpg');
+    $right_hand_file = imageCreateFromJPEG(getcwd() . '/images/righthand.jpg');
+
+    //Scale images
+    $background_scaled = scale_image($background_file, 1150, 1500);
+    $head_scaled = scale_image($head_file, 160, 160);
+    $body_scaled = scale_image($body_file, 160, 160);
+    $feet_scaled = scale_image($feet_file, 160, 160);
+    $legs_scaled = scale_image($legs_file, 160, 160);
+    $left_hand_scaled = scale_image($left_hand_file, 160, 160);
+    $right_hand_scaled = scale_image($right_hand_file, 160, 160);
+
+    //Scaled image sizes
+    $background_width = imageSX($background_scaled);
+    $background_height = imageSY($background_scaled);
+
+    $head_width = imageSX($head_scaled);
+    $head_height = imageSY($head_scaled);
+
+    $body_width = imagesx($body_scaled);
+    $body_height = imagesy($body_scaled);
+
+    $feet_width = imagesx($feet_scaled);
+    $feet_height = imagesy($feet_scaled);
+
+    $legs_width = imagesx($legs_scaled);
+    $legs_height = imagesy($legs_scaled);
+
+    $left_hand_width = imagesx($left_hand_scaled);
+    $left_hand_height = imagesy($left_hand_scaled);
+
+    $right_hand_width = imagesx($right_hand_scaled);
+    $right_hand_height = imagesy($right_hand_scaled);
+
+    //Locations of where the images go on the background. Use them in the image map?
+    $dest_x = ( $background_width / 2 ) - ( $head_width / 2 );
+    $dest_y = ( $background_height / 9 ) - ( $head_height / 2 );
+
+    $feetx = ( $background_width / 2 ) - ( $feet_width / 2 );
+    $feety = ( $background_height ) - ( $feet_height);
+
+    $legsx = ( $background_width / 2) - ( $legs_width / 2 );
+    $legsy = ( 3 * $background_height / 4 ) - ( $feet_height / 2 );
+
+    $left_handx = ( $background_width / 4) - ( $left_hand_width / 2 );
+    $left_handy = ( $background_height / 2 ) - ( $left_hand_height / 2 );
     
-    $im = imagescale($im, 1500,1190, IMG_BICUBIC_FIXED);
-    
-    imagecopymerge ( $im , $heads['shopUrl'] , 31 , 400 , 0 , 0 , imagesx($heads['shopUrl']) , imagesy($heads['shopUrl']) , 100 );
-    
-    imagejpeg($im, 'http://localhost/wp-content/plugins/custom_costume_plugin/images/test.jpeg');
-    
-    imagedestroy($im);
-    
+    $right_handx = ( 3 * $background_width / 4) - ( $right_hand_width / 2 );
+    $right_handy = ( $background_height / 2 ) - ( $right_hand_height / 2 );
+
+    //Merg the images
+    imageCopyMerge($background_scaled, $head_scaled, $dest_x, $dest_y, 0, 0, $head_width, $head_height, 100);
+    imageCopyMerge($background_scaled, $body_scaled, $background_width / 2, $background_height / 2, 0, 0, $body_width, $body_height, 100);
+    imageCopyMerge($background_scaled, $feet_scaled, $feetx, $feety, 0, 0, $feet_width, $feet_height, 100);
+    imageCopyMerge($background_scaled, $legs_scaled, $legsx, $legsy, 0, 0, $legs_width, $legs_height, 100);
+    imageCopyMerge($background_scaled, $left_hand_scaled, $left_handx, $left_handy, 0, 0, $left_hand_width, $left_hand_height, 100);
+
+    imageCopyMerge($background_scaled, $right_hand_scaled, $right_handx, $right_handy, 0, 0, $right_hand_width, $left_hand_height, 100);
+
+    $success = imagejpeg($background_scaled, getcwd() . '/images/' . $post_id . '.jpeg', 75);
+
+    imagedestroy($background_file);
+    imagedestroy($background_scaled);
+    imagedestroy($head_file);
+    imagedestroy($body_file);
+    imagedestroy($legs_file);
+    imagedestroy($feet_file);
+    imagedestroy($left_hand_file);
+    imagedestroy($right_hand_file);
+
+    function scale_image($image, $max_width, $max_height) {
+        $aspect = imagesx($image) / imagesy($image);
+        if ($aspect > 1) {
+            $width = $max_width;
+            $height = $max_height / $aspect;
+        } elseif ($aspect < 1) {
+            $width = $max_width * $aspect;
+            $height = $max_height;
+        } else {
+            $width = $max_width;
+            $height = $max_height;
+        }
+        return imagescale($image, $width, $height, IMG_BICUBIC_FIXED);
+    }
+
     die($post_id);
 }
 
@@ -372,13 +417,12 @@ function uploadAjaxFunction() {
         '%s',
         '%s',
         '%s',
-            ));
+    ));
 //    if ($result === FALSE) {
 //        die(0);
 //    } else {
 //        die(1);
 //    }
-
 // "Name $pieceName location $location Shop $shopName shopURL $shopURL pictURL $pictURL"
 //    add_piece_to_db($pieceName, $location, $shopURL, $pictURL);
     die($result);
