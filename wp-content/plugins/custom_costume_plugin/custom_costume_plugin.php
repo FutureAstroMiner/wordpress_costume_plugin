@@ -34,16 +34,16 @@ ini_set('display_errors', 1);
 error_reporting(-1);
 
 if (!defined('MYPLUGIN_THEME_DIR'))
-    define('MYPLUGIN_THEME_DIR', ABSPATH . 'wp-content/themes/' . get_template());
+{define('MYPLUGIN_THEME_DIR', ABSPATH . 'wp-content/themes/' . get_template());}
 
 if (!defined('MYPLUGIN_PLUGIN_NAME'))
-    define('MYPLUGIN_PLUGIN_NAME', trim(dirname(plugin_basename(__FILE__)), '/'));
+{define('MYPLUGIN_PLUGIN_NAME', trim(dirname(plugin_basename(__FILE__)), '/'));}
 
 if (!defined('MYPLUGIN_PLUGIN_DIR'))
-    define('MYPLUGIN_PLUGIN_DIR', WP_PLUGIN_DIR . '/' . MYPLUGIN_PLUGIN_NAME);
+{define('MYPLUGIN_PLUGIN_DIR', WP_PLUGIN_DIR . '/' . MYPLUGIN_PLUGIN_NAME);}
 
 if (!defined('MYPLUGIN_PLUGIN_URL'))
-    define('MYPLUGIN_PLUGIN_URL', WP_PLUGIN_URL . '/' . MYPLUGIN_PLUGIN_NAME);
+{define('MYPLUGIN_PLUGIN_URL', WP_PLUGIN_URL . '/' . MYPLUGIN_PLUGIN_NAME);}
 
 //global $cname;
 //global $head;
@@ -81,11 +81,11 @@ register_uninstall_hook(__FILE__, 'on_uninstall');
 
 function on_uninstall() {
     if (!current_user_can('activate_plugins'))
-        return;
+    {return;}
     check_admin_referer('bulk-plugins');
 
     if (__FILE__ != WP_UNINSTALL_PLUGIN)
-        return;
+    {return;}
 }
 
 add_action('admin_menu', 'customcostume_admin_actions');
@@ -107,17 +107,11 @@ function customcostume_admin() {
 //Handle the upload
 
 function customcostume_handle_upload() {
-    if ($_GET["page"] == 'upload_costume') {
-        echo 'Success<br>';
-    }
-    echo $wpdb->base_prefix;
     ?>
-
     <!DOCTYPE html>
     <html>
         <body>
             <form id="uploadapiece" action= "">
-
                 Piece name: <input type="text" name="pieceName" cols="50">
                 <br>
                 Location: <select name="location">
@@ -126,18 +120,11 @@ function customcostume_handle_upload() {
                     <option value="body">Body</option>
                     <option value="legs">Legs</option>
                     <option value="feet">Feet</option>
-                </select>
-                <br>
-                Shop URL: <input type="text" name="shopURL">
-                <br>
-                Picture URL: <input type="text" name="pictURL">
-                <br>
-
-                <input type="submit" name="submit" class="button" id="submit_btn"/>
-            </form>
-
-        </body>
-    </html> <?php
+                </select>                <br>
+                Shop URL: <input type="text" name="shopURL">                <br>
+                Picture URL: <input type="text" name="pictURL">                <br>
+                <input type="submit" name="submit" class="button" id="submit_btn"/> </form>
+        </body>    </html> <?php
 }
 
 function customcostume_posts_actions() {
@@ -153,76 +140,50 @@ function customcostume_posts() { // need to fill out options from database http:
     $bodys = $wpdb->get_results("SELECT * FROM {$wpdb->prefix}costumesdb WHERE location = 'body'", ARRAY_A);
     $legs = $wpdb->get_results("SELECT * FROM {$wpdb->prefix}costumesdb WHERE location = 'legs'", ARRAY_A);
     $feets = $wpdb->get_results("SELECT * FROM {$wpdb->prefix}costumesdb WHERE location = 'feet'", ARRAY_A);
-//    print_r($hands);
-//$result = mysql_fetch_array($hands);
-//    echo "</br>";
-//    foreach ($hands as $hand) {
-//        print_r($hand);
-//        echo "</br>";
-//        echo $hand['pieceName'];
-//        echo "</br>";
-//    }//http://stackoverflow.com/questions/5967322/calling-a-php-function-from-an-html-form-in-the-same-file
-// another method of submitting the form <?php echo MYPLUGIN_PLUGIN_DIR; (?end PHP)/custom_costume_createpost.php    
 
     wp_reset_query();
-    if ($_GET["page"] == 'create_costume') {
-        echo 'Success';
-    } else {
-        echo 'Nope<br>';
-    };
+
     echo $_GET["page"];
     ?>
-
     <!DOCTYPE html>
     <html>
         <head>
-
         </head>
         <body>
-
             <form id="createacostume" action= "">
                 Costume Name: <input type="text" name="cname"><br>
-
                 Head: <select name="head">
                     <?php foreach ($heads as $head) { ?>
                         <option value="<?php echo $head['id'] ?>"><?php echo $head['shopName'] . " - " . $head['pieceName'] ?></option>
                     <?php } ?>
                 </select><br>
-
                 Right Hand: <select name="rightHand">
                     <?php foreach ($hands as $hand) { ?>
                         <option value="<?php echo $hand['id'] ?>"><?php echo $hand['shopName'] . " - " . $hand['pieceName'] ?></option>
                     <?php } ?>
                 </select><br>
-
                 Left Hand: <select name="leftHand">
                     <?php foreach ($hands as $hand) { ?>
                         <option value="<?php echo $hand['id'] ?>"><?php echo $hand['shopName'] . " - " . $hand['pieceName'] ?></option>
                     <?php } ?>
                 </select><br>
-
                 Body: <select name="body">
                     <?php foreach ($bodys as $body) { ?>
                         <option value="<?php echo $body['id'] ?>"><?php echo $body['shopName'] . " - " . $body['pieceName'] ?></option>
                     <?php } ?>
                 </select><br>
-
                 Legs: <select name="legs">
                     <?php foreach ($legs as $leg) { ?>
                         <option value="<?php echo $leg['id'] ?>"><?php echo $leg['shopName'] . " - " . $leg['pieceName'] ?></option>
                     <?php } ?>
                 </select><br>
-
                 Feet: <select name="feet">
                     <?php foreach ($feets as $feet) { ?>
                         <option value="<?php echo $feet['id'] ?>"><?php echo $feet['shopName'] . " - " . $feet['pieceName'] ?></option>
                     <?php } ?>
-                </select>
-
-                <br>
+                </select>                <br>
                 <input type="submit" name="submit" class="button" id="submit_btn"/>
             </form>
-
         </body>
     </html> 
     <?php
@@ -243,9 +204,6 @@ add_action('wp_print_scripts', 'add_myjavascript');
 function myAjaxFunction() {
     global $wpdb;
 
-    //get the data from ajax() call  
-//    echo "Data returned!";
-
     $cname = $_POST['cname'];
     $head = (int) ( $_POST['head'] ); //tested and is an int
     $righthand = (int) ( $_POST['rightHand'] );
@@ -253,6 +211,7 @@ function myAjaxFunction() {
     $body = (int) ( $_POST['body'] );
     $legs = (int) ( $_POST['legs'] );
     $feet = (int) ( $_POST['feet'] );
+//    $test = filter_input(INPUT_POST, 'cname');
 
     $heads = $wpdb->get_row("SELECT * FROM {$wpdb->prefix}costumesdb WHERE id = '$head'", ARRAY_A);
     $rhands = $wpdb->get_row("SELECT * FROM {$wpdb->prefix}costumesdb WHERE id = '$righthand'", ARRAY_A);
@@ -261,10 +220,11 @@ function myAjaxFunction() {
     $legss = $wpdb->get_row("SELECT * FROM {$wpdb->prefix}costumesdb WHERE id = '$legs'", ARRAY_A);
     $feets = $wpdb->get_row("SELECT * FROM {$wpdb->prefix}costumesdb WHERE id = '$feet'", ARRAY_A);
 
+    //Creating original post
     $post = array(
         'ping_status' => get_option('default_ping_status'),
         'post_author' => $user_ID, //The user ID number of the author.
-        'post_content' => $content,
+//        'post_content' => $content,
 //The full text of the post.
         'post_name' => $cname, // The name (slug) for your post
         'post_status' => 'draft', //Set the status of the new post.
@@ -280,6 +240,7 @@ function myAjaxFunction() {
     //TODO Change post content once image is made.
 
     //Load image resources
+    //$file = imageCreateFromJPEG($hands['pictURL']);
     $head_file = imageCreateFromJPEG(getcwd() . '/images/head.jpg');
     $background_file = imageCreateFromJPEG(getcwd() . '/images/background.jpg');
     $body_file = imageCreateFromJPEG(getcwd() . '/images/body.jpg');
@@ -341,7 +302,6 @@ function myAjaxFunction() {
     imageCopyMerge($background_scaled, $feet_scaled, $feetx, $feety, 0, 0, $feet_width, $feet_height, 100);
     imageCopyMerge($background_scaled, $legs_scaled, $legsx, $legsy, 0, 0, $legs_width, $legs_height, 100);
     imageCopyMerge($background_scaled, $left_hand_scaled, $left_handx, $left_handy, 0, 0, $left_hand_width, $left_hand_height, 100);
-
     imageCopyMerge($background_scaled, $right_hand_scaled, $right_handx, $right_handy, 0, 0, $right_hand_width, $left_hand_height, 100);
 
     $success = imagejpeg($background_scaled, getcwd() . '/images/' . $post_id . '.jpeg', 75);
@@ -369,6 +329,15 @@ function myAjaxFunction() {
         }
         return imagescale($image, $width, $height, IMG_BICUBIC_FIXED);
     }
+    
+    //Modify post
+    $modified_post = array(
+        'post_content' => getcwd() . '/images/' . $post_id . '.jpeg',
+//The full text of the post.
+        'post_id' => $post_id,
+
+    );
+    wp_insert_post($modified_post);
 
     die($post_id);
 }
