@@ -29,9 +29,9 @@
  * 
  */
 
-ini_set('display_startup_errors', 1);
-ini_set('display_errors', 1);
-error_reporting(-1);
+//ini_set('display_startup_errors', 1);
+//ini_set('display_errors', 1);
+//error_reporting(-1);
 
 if (!defined('MYPLUGIN_THEME_DIR'))
 {define('MYPLUGIN_THEME_DIR', ABSPATH . 'wp-content/themes/' . get_template());}
@@ -330,9 +330,11 @@ function myAjaxFunction() {
         return imagescale($image, $width, $height, IMG_BICUBIC_FIXED);
     }
     
+    
     //Modify post
+    $content = getcwd() . '/images/' . $post_id . '.jpeg';
     $modified_post = array(
-        'post_content' => getcwd() . '/images/' . $post_id . '.jpeg',
+        'post_content' => $content,
 //The full text of the post.
         'post_id' => $post_id,
 
