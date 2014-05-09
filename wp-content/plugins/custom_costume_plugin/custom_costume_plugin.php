@@ -332,13 +332,13 @@ function myAjaxFunction() {
     
     
     //Modify post
-    $content = getcwd() . '/images/' . $post_id . '.jpeg';
+    $content = '<img src="' . getcwd() . '/images/' . $post_id . '.jpeg">';
     $modified_post = array(
         'post_content' => $content,
 //The full text of the post.
         'post_id' => $post_id,
-
     );
+
     wp_insert_post($modified_post);
 
     die($post_id);
@@ -366,7 +366,7 @@ function register_plugin_styles() {
     wp_enqueue_style('custom_costume_plugin');
 }
 
-//Not currently working
+//Not currently used
 function uploadAjaxFunction() {
     global $table_prefix;
     $table_name = $table_prefix . "costumesdb";
