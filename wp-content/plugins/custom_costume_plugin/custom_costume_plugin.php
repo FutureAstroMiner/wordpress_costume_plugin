@@ -298,7 +298,7 @@ function myAjaxFunction() {
 
     //Merg the images
     imageCopyMerge($background_scaled, $head_scaled, $dest_x, $dest_y, 0, 0, $head_width, $head_height, 100);
-    imageCopyMerge($background_scaled, $body_scaled, $background_width / 2, $background_height / 2, 0, 0, $body_width, $body_height, 100);
+    imageCopyMerge($background_scaled, $body_scaled, $background_width / 2, $background_height / 4, 0, 0, $body_width, $body_height, 100);
     imageCopyMerge($background_scaled, $feet_scaled, $feetx, $feety, 0, 0, $feet_width, $feet_height, 100);
     imageCopyMerge($background_scaled, $legs_scaled, $legsx, $legsy, 0, 0, $legs_width, $legs_height, 100);
     imageCopyMerge($background_scaled, $left_hand_scaled, $left_handx, $left_handy, 0, 0, $left_hand_width, $left_hand_height, 100);
