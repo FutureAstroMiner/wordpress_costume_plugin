@@ -339,7 +339,7 @@ function myAjaxFunction() {
         'post_id' => $post_id,
     );
 
-    wp_insert_post($modified_post);
+    wp_update_post( $modified_post );
 
     die($post_id);
 }
