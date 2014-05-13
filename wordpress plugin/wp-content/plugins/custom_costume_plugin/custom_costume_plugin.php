@@ -241,13 +241,13 @@ function myAjaxFunction() {
 
     //Load image resources
     //$file = imageCreateFromJPEG($hands['pictURL']);
-    $head_file = imageCreateFromJPEG(getcwd() . '/images/head.jpg');
-    $background_file = imageCreateFromJPEG(getcwd() . '/images/background.jpg');
-    $body_file = imageCreateFromJPEG(getcwd() . '/images/body.jpg');
-    $feet_file = imageCreateFromJPEG(getcwd() . '/images/feet.jpg');
-    $legs_file = imageCreateFromJPEG(getcwd() . '/images/legs.jpg');
-    $left_hand_file = imageCreateFromJPEG(getcwd() . '/images/lefthand.jpg');
-    $right_hand_file = imageCreateFromJPEG(getcwd() . '/images/righthand.jpg');
+    $head_file = imageCreateFromJPEG(dirname(__FILE__) . '/images/head.jpg');
+    $background_file = imageCreateFromJPEG(dirname(__FILE__) . '/images/background.jpg');
+    $body_file = imageCreateFromJPEG(dirname(__FILE__) . '/images/body.jpg');
+    $feet_file = imageCreateFromJPEG(dirname(__FILE__) . '/images/feet.jpg');
+    $legs_file = imageCreateFromJPEG(dirname(__FILE__) . '/images/legs.jpg');
+    $left_hand_file = imageCreateFromJPEG(dirname(__FILE__) . '/images/lefthand.jpg');
+    $right_hand_file = imageCreateFromJPEG(dirname(__FILE__) . '/images/righthand.jpg');
 
     //Scale images
     $background_scaled = scale_image($background_file, 1150, 1500);
@@ -304,7 +304,7 @@ function myAjaxFunction() {
     imageCopyMerge($background_scaled, $left_hand_scaled, $left_handx, $left_handy, 0, 0, $left_hand_width, $left_hand_height, 100);
     imageCopyMerge($background_scaled, $right_hand_scaled, $right_handx, $right_handy, 0, 0, $right_hand_width, $left_hand_height, 100);
 
-    $success = imagejpeg($background_scaled, getcwd() . '/images/' . $post_id . '.jpeg', 75);
+    $success = imagejpeg($background_scaled, dirname(__FILE__) . '/images/' . $post_id . '.jpeg', 75);
 
     imagedestroy($background_file);
     imagedestroy($background_scaled);
@@ -314,8 +314,24 @@ function myAjaxFunction() {
     imagedestroy($feet_file);
     imagedestroy($left_hand_file);
     imagedestroy($right_hand_file);
+    
+    $image_file = dirname(__FILE__) . '/images/' . $post_id . '.jpeg';
 
-    function scale_image($image, $max_width, $max_height) {
+    //Modify post
+    $content = '<img src=' . $image_file . '>';
+    $modified_post = array(
+        'post_content' => $content,
+//The full text of the post.
+        'post_id' => $post_id,
+    );
+
+    wp_update_post( $modified_post );
+
+    die($post_id);
+}
+
+//Generic function to scale an image to fit in a box keeping the aspect ratio of the original image
+function scale_image($image, $max_width, $max_height) {
         $aspect = imagesx($image) / imagesy($image);
         if ($aspect > 1) {
             $width = $max_width;
@@ -329,20 +345,6 @@ function myAjaxFunction() {
         }
         return imagescale($image, $width, $height, IMG_BICUBIC_FIXED);
     }
-    
-    
-    //Modify post
-    $content = '<img src="' . getcwd() . '/images/' . $post_id . '.jpeg">';
-    $modified_post = array(
-        'post_content' => $content,
-//The full text of the post.
-        'post_id' => $post_id,
-    );
-
-    wp_update_post( $modified_post );
-
-    die($post_id);
-}
 
 // creating Ajax call for WordPress  
 add_action('wp_ajax_nopriv_myAjaxFunction', 'myAjaxFunction');
