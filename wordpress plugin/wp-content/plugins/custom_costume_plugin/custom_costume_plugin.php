@@ -315,14 +315,22 @@ function myAjaxFunction() {
     imagedestroy($left_hand_file);
     imagedestroy($right_hand_file);
     
-    $image_file = dirname(__FILE__) . '/images/' . $post_id . '.jpeg';
+    $image_file = \MYPLUGIN_PLUGIN_URL . '/images/' . $post_id . '.jpeg';
 
     //Modify post
-    $content = '<img src=' . $image_file . '>';
+    $content = '<img src=' . $image_file . 'alt="'$cname'" usemap="#costumemap">
+            <map name="costumemap">
+  <area shape="rect" coords="0,0,82,126" alt="Sun" href="head.htm">
+<area shape="rect" coords="0,0,82,126" alt="Sun" href="body.htm">
+<area shape="rect" coords="0,0,82,126" alt="Sun" href="legs.htm">
+<area shape="rect" coords="0,0,82,126" alt="Sun" href="feet.htm">
+<area shape="rect" coords="0,0,82,126" alt="Sun" href="right_hand.htm">
+<area shape="rect" coords="0,0,82,126" alt="Sun" href="left_hand.htm">
+</map>';
     $modified_post = array(
         'post_content' => $content,
 //The full text of the post.
-        'post_id' => $post_id,
+        'ID' => $post_id,
     );
 
     wp_update_post( $modified_post );
