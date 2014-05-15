@@ -33,17 +33,21 @@
 //ini_set('display_errors', 1);
 //error_reporting(-1);
 
-if (!defined('MYPLUGIN_THEME_DIR'))
-{define('MYPLUGIN_THEME_DIR', ABSPATH . 'wp-content/themes/' . get_template());}
+if (!defined('MYPLUGIN_THEME_DIR')) {
+    define('MYPLUGIN_THEME_DIR', ABSPATH . 'wp-content/themes/' . get_template());
+}
 
-if (!defined('MYPLUGIN_PLUGIN_NAME'))
-{define('MYPLUGIN_PLUGIN_NAME', trim(dirname(plugin_basename(__FILE__)), '/'));}
+if (!defined('MYPLUGIN_PLUGIN_NAME')) {
+    define('MYPLUGIN_PLUGIN_NAME', trim(dirname(plugin_basename(__FILE__)), '/'));
+}
 
-if (!defined('MYPLUGIN_PLUGIN_DIR'))
-{define('MYPLUGIN_PLUGIN_DIR', WP_PLUGIN_DIR . '/' . MYPLUGIN_PLUGIN_NAME);}
+if (!defined('MYPLUGIN_PLUGIN_DIR')) {
+    define('MYPLUGIN_PLUGIN_DIR', WP_PLUGIN_DIR . '/' . MYPLUGIN_PLUGIN_NAME);
+}
 
-if (!defined('MYPLUGIN_PLUGIN_URL'))
-{define('MYPLUGIN_PLUGIN_URL', WP_PLUGIN_URL . '/' . MYPLUGIN_PLUGIN_NAME);}
+if (!defined('MYPLUGIN_PLUGIN_URL')) {
+    define('MYPLUGIN_PLUGIN_URL', WP_PLUGIN_URL . '/' . MYPLUGIN_PLUGIN_NAME);
+}
 
 //global $cname;
 //global $head;
@@ -80,12 +84,14 @@ function on_activate() {
 register_uninstall_hook(__FILE__, 'on_uninstall');
 
 function on_uninstall() {
-    if (!current_user_can('activate_plugins'))
-    {return;}
+    if (!current_user_can('activate_plugins')) {
+        return;
+    }
     check_admin_referer('bulk-plugins');
 
-    if (__FILE__ != WP_UNINSTALL_PLUGIN)
-    {return;}
+    if (__FILE__ != WP_UNINSTALL_PLUGIN) {
+        return;
+    }
 }
 
 add_action('admin_menu', 'customcostume_admin_actions');
@@ -155,32 +161,32 @@ function customcostume_posts() { // need to fill out options from database http:
                 Head: <select name="head">
                     <?php foreach ($heads as $head) { ?>
                         <option value="<?php echo $head['id'] ?>"><?php echo $head['shopName'] . " - " . $head['pieceName'] ?></option>
-                    <?php } ?>
+    <?php } ?>
                 </select><br>
                 Right Hand: <select name="rightHand">
                     <?php foreach ($hands as $hand) { ?>
                         <option value="<?php echo $hand['id'] ?>"><?php echo $hand['shopName'] . " - " . $hand['pieceName'] ?></option>
-                    <?php } ?>
+    <?php } ?>
                 </select><br>
                 Left Hand: <select name="leftHand">
                     <?php foreach ($hands as $hand) { ?>
                         <option value="<?php echo $hand['id'] ?>"><?php echo $hand['shopName'] . " - " . $hand['pieceName'] ?></option>
-                    <?php } ?>
+    <?php } ?>
                 </select><br>
                 Body: <select name="body">
                     <?php foreach ($bodys as $body) { ?>
                         <option value="<?php echo $body['id'] ?>"><?php echo $body['shopName'] . " - " . $body['pieceName'] ?></option>
-                    <?php } ?>
+    <?php } ?>
                 </select><br>
                 Legs: <select name="legs">
                     <?php foreach ($legs as $leg) { ?>
                         <option value="<?php echo $leg['id'] ?>"><?php echo $leg['shopName'] . " - " . $leg['pieceName'] ?></option>
-                    <?php } ?>
+    <?php } ?>
                 </select><br>
                 Feet: <select name="feet">
-                    <?php foreach ($feets as $feet) { ?>
+    <?php foreach ($feets as $feet) { ?>
                         <option value="<?php echo $feet['id'] ?>"><?php echo $feet['shopName'] . " - " . $feet['pieceName'] ?></option>
-                    <?php } ?>
+    <?php } ?>
                 </select>                <br>
                 <input type="submit" name="submit" class="button" id="submit_btn"/>
             </form>
@@ -235,10 +241,9 @@ function myAjaxFunction() {
 
     $post_id = wp_insert_post($post);
     $wpdb->flush();
-    
+
     //TODO Get image locations from database and load them as image resourses
     //TODO Change post content once image is made.
-
     //Load image resources
     //$file = imageCreateFromJPEG($hands['pictURL']);
     $head_file = imageCreateFromJPEG(dirname(__FILE__) . '/images/head.jpg');
@@ -281,24 +286,27 @@ function myAjaxFunction() {
     $right_hand_height = imagesy($right_hand_scaled);
 
     //Locations of where the images go on the background. Use them in the image map?
-    $dest_x = ( $background_width / 2 ) - ( $head_width / 2 );
-    $dest_y = ( $background_height / 9 ) - ( $head_height / 2 );
-
-    $feetx = ( $background_width / 2 ) - ( $feet_width / 2 );
-    $feety = ( $background_height ) - ( $feet_height);
-
-    $legsx = ( $background_width / 2) - ( $legs_width / 2 );
-    $legsy = ( 3 * $background_height / 4 ) - ( $feet_height / 2 );
-
-    $left_handx = ( $background_width / 4) - ( $left_hand_width / 2 );
-    $left_handy = ( $background_height / 2 ) - ( $left_hand_height / 2 );
+    $head_x = intval(( $background_width / 2 ) - ( $head_width / 2 ));
+    $head_y = intval(( $background_height / 9 ) - ( $head_height / 2 ));
     
-    $right_handx = ( 3 * $background_width / 4) - ( $right_hand_width / 2 );
-    $right_handy = ( $background_height / 2 ) - ( $right_hand_height / 2 );
+    $body_x = intval(($background_width / 2) - ($body_width / 2));
+    $body_y = intval(($background_height / 4) - ($body_height / 2));
+
+    $feetx = intval(( $background_width / 2 ) - ( $feet_width / 2 ));
+    $feety = intval(( $background_height ) - ( $feet_height));
+
+    $legsx = intval(( $background_width / 2) - ( $legs_width / 2 ));
+    $legsy = intval(( 3 * $background_height / 4 ) - ( $feet_height / 2 ));
+
+    $left_handx = intval(( $background_width / 4) - ( $left_hand_width / 2 ));
+    $left_handy = intval(( $background_height / 2 ) - ( $left_hand_height / 2 ));
+
+    $right_handx = intval(( 3 * $background_width / 4) - ( $right_hand_width / 2 ));
+    $right_handy = intval(( $background_height / 2 ) - ( $right_hand_height / 2 ));
 
     //Merg the images
-    imageCopyMerge($background_scaled, $head_scaled, $dest_x, $dest_y, 0, 0, $head_width, $head_height, 100);
-    imageCopyMerge($background_scaled, $body_scaled, $background_width / 2, $background_height / 4, 0, 0, $body_width, $body_height, 100);
+    imageCopyMerge($background_scaled, $head_scaled, $head_x, $head_y, 0, 0, $head_width, $head_height, 100);
+    imageCopyMerge($background_scaled, $body_scaled, $body_x, $body_y, 0, 0, $body_width, $body_height, 100);
     imageCopyMerge($background_scaled, $feet_scaled, $feetx, $feety, 0, 0, $feet_width, $feet_height, 100);
     imageCopyMerge($background_scaled, $legs_scaled, $legsx, $legsy, 0, 0, $legs_width, $legs_height, 100);
     imageCopyMerge($background_scaled, $left_hand_scaled, $left_handx, $left_handy, 0, 0, $left_hand_width, $left_hand_height, 100);
@@ -314,18 +322,30 @@ function myAjaxFunction() {
     imagedestroy($feet_file);
     imagedestroy($left_hand_file);
     imagedestroy($right_hand_file);
-    
+
     $image_file = \MYPLUGIN_PLUGIN_URL . '/images/' . $post_id . '.jpeg';
+    
+    $head_position = strval($head_x) . ', ' . strval($head_y) . ', ' . strval($head_x + $head_width) . ', ' . strval($head_y + $head_height);
+    
+    $body_position = ''.$body_x.' ,'.$body_y.' ,'.$body_x + $body_width.' ,'.$body_y + $body_height;
+
+    $feet_position = ''.$feetx.' ,'.$feety.' ,'.$feetx + $feet_width.' ,'.$feety + $feet_height;
+    
+    $legs_position = ''.$legsx.' ,'.$legsy.' ,'.$legsx + $legs_width.' ,'.$legsy + $legs_height;
+
+    $left_hand_position = ''.$left_handx.' ,'.$left_handy.' ,'.$left_handx + $left_hand_width.' ,'.$left_handy + $left_hand_height;
+
+    $right_hand_position = ''.$right_handx.' ,'.$right_handy.' ,'.$right_handx + $right_hand_width.' ,'.$right_handy + $right_hand_height;
 
     //Modify post
-    $content = '<img src=' . $image_file . 'alt="'$cname'" usemap="#costumemap">
+    $content = '<img src="' . $image_file . '" alt="'. $cname .'" usemap="#costumemap">
             <map name="costumemap">
-  <area shape="rect" coords="0,0,82,126" alt="Sun" href="head.htm">
-<area shape="rect" coords="0,0,82,126" alt="Sun" href="body.htm">
-<area shape="rect" coords="0,0,82,126" alt="Sun" href="legs.htm">
-<area shape="rect" coords="0,0,82,126" alt="Sun" href="feet.htm">
-<area shape="rect" coords="0,0,82,126" alt="Sun" href="right_hand.htm">
-<area shape="rect" coords="0,0,82,126" alt="Sun" href="left_hand.htm">
+  <area shape="rect" coords="'.$head_position.'" alt="Head" href="head.htm">
+<area shape="rect" coords="'.$body_position.'" alt="Body" href="body.htm">
+<area shape="rect" coords="'.$legs_position.'" alt="legs" href="legs.htm">
+<area shape="rect" coords="'.$feet_position.'" alt="Feet" href="feet.htm">
+<area shape="rect" coords="'.$right_hand_position.'" alt="Right Hand" href="right_hand.htm">
+<area shape="rect" coords="'.$left_hand_position.'" alt="Left Hand" href="left_hand.htm">
 </map>';
     $modified_post = array(
         'post_content' => $content,
@@ -333,26 +353,26 @@ function myAjaxFunction() {
         'ID' => $post_id,
     );
 
-    wp_update_post( $modified_post );
+    wp_update_post($modified_post);
 
     die($post_id);
 }
 
 //Generic function to scale an image to fit in a box keeping the aspect ratio of the original image
 function scale_image($image, $max_width, $max_height) {
-        $aspect = imagesx($image) / imagesy($image);
-        if ($aspect > 1) {
-            $width = $max_width;
-            $height = $max_height / $aspect;
-        } elseif ($aspect < 1) {
-            $width = $max_width * $aspect;
-            $height = $max_height;
-        } else {
-            $width = $max_width;
-            $height = $max_height;
-        }
-        return imagescale($image, $width, $height, IMG_BICUBIC_FIXED);
+    $aspect = imagesx($image) / imagesy($image);
+    if ($aspect > 1) {
+        $width = $max_width;
+        $height = $max_height / $aspect;
+    } elseif ($aspect < 1) {
+        $width = $max_width * $aspect;
+        $height = $max_height;
+    } else {
+        $width = $max_width;
+        $height = $max_height;
     }
+    return imagescale($image, $width, $height, IMG_BICUBIC_FIXED);
+}
 
 // creating Ajax call for WordPress  
 add_action('wp_ajax_nopriv_myAjaxFunction', 'myAjaxFunction');
