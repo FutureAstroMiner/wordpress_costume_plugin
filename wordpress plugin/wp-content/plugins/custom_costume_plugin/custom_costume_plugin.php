@@ -161,32 +161,32 @@ function customcostume_posts() { // need to fill out options from database http:
                 Head: <select name="head">
                     <?php foreach ($heads as $head) { ?>
                         <option value="<?php echo $head['id'] ?>"><?php echo $head['shopName'] . " - " . $head['pieceName'] ?></option>
-    <?php } ?>
+                    <?php } ?>
                 </select><br>
                 Right Hand: <select name="rightHand">
                     <?php foreach ($hands as $hand) { ?>
                         <option value="<?php echo $hand['id'] ?>"><?php echo $hand['shopName'] . " - " . $hand['pieceName'] ?></option>
-    <?php } ?>
+                    <?php } ?>
                 </select><br>
                 Left Hand: <select name="leftHand">
                     <?php foreach ($hands as $hand) { ?>
                         <option value="<?php echo $hand['id'] ?>"><?php echo $hand['shopName'] . " - " . $hand['pieceName'] ?></option>
-    <?php } ?>
+                    <?php } ?>
                 </select><br>
                 Body: <select name="body">
                     <?php foreach ($bodys as $body) { ?>
                         <option value="<?php echo $body['id'] ?>"><?php echo $body['shopName'] . " - " . $body['pieceName'] ?></option>
-    <?php } ?>
+                    <?php } ?>
                 </select><br>
                 Legs: <select name="legs">
                     <?php foreach ($legs as $leg) { ?>
                         <option value="<?php echo $leg['id'] ?>"><?php echo $leg['shopName'] . " - " . $leg['pieceName'] ?></option>
-    <?php } ?>
+                    <?php } ?>
                 </select><br>
                 Feet: <select name="feet">
-    <?php foreach ($feets as $feet) { ?>
+                    <?php foreach ($feets as $feet) { ?>
                         <option value="<?php echo $feet['id'] ?>"><?php echo $feet['shopName'] . " - " . $feet['pieceName'] ?></option>
-    <?php } ?>
+                    <?php } ?>
                 </select>                <br>
                 <input type="submit" name="submit" class="button" id="submit_btn"/>
             </form>
@@ -243,7 +243,7 @@ function myAjaxFunction() {
     $wpdb->flush();
 
     //TODO Get image locations from database and load them as image resourses
-    //TODO Change post content once image is made.
+
     //Load image resources
     //$file = imageCreateFromJPEG($hands['pictURL']);
     $head_file = imageCreateFromJPEG(dirname(__FILE__) . '/images/head.jpg');
@@ -288,7 +288,7 @@ function myAjaxFunction() {
     //Locations of where the images go on the background. Use them in the image map?
     $head_x = intval(( $background_width / 2 ) - ( $head_width / 2 ));
     $head_y = intval(( $background_height / 9 ) - ( $head_height / 2 ));
-    
+
     $body_x = intval(($background_width / 2) - ($body_width / 2));
     $body_y = intval(($background_height / 4) - ($body_height / 2));
 
@@ -324,32 +324,36 @@ function myAjaxFunction() {
     imagedestroy($right_hand_file);
 
     $image_file = \MYPLUGIN_PLUGIN_URL . '/images/' . $post_id . '.jpeg';
-    
+
     $head_position = strval($head_x) . ', ' . strval($head_y) . ', ' . strval($head_x + $head_width) . ', ' . strval($head_y + $head_height);
-    
-    $body_position = ''.$body_x.' ,'.$body_y.' ,'.$body_x + $body_width.' ,'.$body_y + $body_height;
-
-    $feet_position = ''.$feetx.' ,'.$feety.' ,'.$feetx + $feet_width.' ,'.$feety + $feet_height;
-    
-    $legs_position = ''.$legsx.' ,'.$legsy.' ,'.$legsx + $legs_width.' ,'.$legsy + $legs_height;
-
-    $left_hand_position = ''.$left_handx.' ,'.$left_handy.' ,'.$left_handx + $left_hand_width.' ,'.$left_handy + $left_hand_height;
-
-    $right_hand_position = ''.$right_handx.' ,'.$right_handy.' ,'.$right_handx + $right_hand_width.' ,'.$right_handy + $right_hand_height;
+    $body_position = strval($body_x) . ' ,' . strval($body_y) . ' ,' . strval($body_x + $body_width) . ' ,' . strval($body_y + $body_height);
+    $feet_position = strval($feetx) . ' ,' . strval($feety) . ' ,' . strval($feetx + $feet_width) . ' ,' . strval($feety + $feet_height);
+    $legs_position = strval($legsx) . ' ,' . strval($legsy) . ' ,' . strval($legsx + $legs_width) . ' ,' . strval($legsy + $legs_height);
+    $left_hand_position = strval($left_handx) . ' ,' . strval($left_handy) . ' ,' . strval($left_handx) + strval($left_hand_width) . ' ,' . strval($left_handy + $left_hand_height);
+    $right_hand_position = strval($right_handx) . ' ,' . strval($right_handy) . ' ,' . strval($right_handx + $right_hand_width) . ' ,' . strval($right_handy + $right_hand_height);
 
     //Modify post
-    $content = '<img src="' . $image_file . '" alt="'. $cname .'" usemap="#costumemap">
+    $content = '<img src="' . $image_file . '" alt="' . $cname . '" usemap="#costumemap">
             <map name="costumemap">
-  <area shape="rect" coords="'.$head_position.'" alt="Head" href="head.htm">
-<area shape="rect" coords="'.$body_position.'" alt="Body" href="body.htm">
-<area shape="rect" coords="'.$legs_position.'" alt="legs" href="legs.htm">
-<area shape="rect" coords="'.$feet_position.'" alt="Feet" href="feet.htm">
-<area shape="rect" coords="'.$right_hand_position.'" alt="Right Hand" href="right_hand.htm">
-<area shape="rect" coords="'.$left_hand_position.'" alt="Left Hand" href="left_hand.htm">
-</map>';
+  <area shape="rect" coords="' . $head_position . '" alt="Head" href="head.htm">
+<area shape="rect" coords="' . $body_position . '" alt="Body" href="body.htm">
+<area shape="rect" coords="' . $legs_position . '" alt="legs" href="legs.htm">
+<area shape="rect" coords="' . $feet_position . '" alt="Feet" href="feet.htm">
+<area shape="rect" coords="' . $right_hand_position . '" alt="Right Hand" href="right_hand.htm">
+<area shape="rect" coords="' . $left_hand_position . '" alt="Left Hand" href="left_hand.htm">
+</map><br>
+Head position = ' . $head_position . '<br>
+    Head x position = ' . $head_x . '<br>
+        Head y position = ' . $head_y . '<br>
+            Head width = ' . $head_width . '<br>
+                Head height = ' . $head_height . '<br>
+            Body pos = ' . $body_position . '<br>
+            Leg pos = ' . $legs_position . '<br>
+            Feet pos = ' . $feet_position . '<br>
+            Right hand pos = ' . $right_hand_position . '<br>
+           Left hand pos = ' . $left_hand_position . '<br>';
     $modified_post = array(
         'post_content' => $content,
-//The full text of the post.
         'ID' => $post_id,
     );
 
