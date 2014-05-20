@@ -373,9 +373,14 @@ blockquote.alignright p {
 
 img {
 	height: auto;
-	max-width: 474px;
-	vertical-align: middle;
+	max-width: 1500px;
+/*	vertical-align: middle;*/
 }
+
+.imgmap-frontend-image img{
+
+margin: 0px;
+} 
 
 .wp-caption {
 	background: transparent;
