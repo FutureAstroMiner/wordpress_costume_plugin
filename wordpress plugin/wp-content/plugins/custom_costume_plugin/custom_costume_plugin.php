@@ -326,11 +326,11 @@ function myAjaxFunction() {
     $image_file = \MYPLUGIN_PLUGIN_URL . '/images/' . $post_id . '.jpeg';
 
     $head_position = strval($head_x) . ', ' . strval($head_y) . ', ' . strval($head_x + $head_width) . ', ' . strval($head_y + $head_height);
-    $body_position = strval($body_x) . ' ,' . strval($body_y) . ' ,' . strval($body_x + $body_width) . ' ,' . strval($body_y + $body_height);
-    $feet_position = strval($feetx) . ' ,' . strval($feety) . ' ,' . strval($feetx + $feet_width) . ' ,' . strval($feety + $feet_height);
-    $legs_position = strval($legsx) . ' ,' . strval($legsy) . ' ,' . strval($legsx + $legs_width) . ' ,' . strval($legsy + $legs_height);
-    $left_hand_position = strval($left_handx) . ' ,' . strval($left_handy) . ' ,' . strval($left_handx) + strval($left_hand_width) . ' ,' . strval($left_handy + $left_hand_height);
-    $right_hand_position = strval($right_handx) . ' ,' . strval($right_handy) . ' ,' . strval($right_handx + $right_hand_width) . ' ,' . strval($right_handy + $right_hand_height);
+    $body_position = strval($body_x) . ', ' . strval($body_y) . ', ' . strval($body_x + $body_width) . ', ' . strval($body_y + $body_height);
+    $feet_position = strval($feetx) . ', ' . strval($feety) . ', ' . strval($feetx + $feet_width) . ', ' . strval($feety + $feet_height);
+    $legs_position = strval($legsx) . ', ' . strval($legsy) . ', ' . strval($legsx + $legs_width) . ', ' . strval($legsy + $legs_height);
+    $left_hand_position = strval($left_handx) . ', ' . strval($left_handy) . ', ' . strval($left_handx + $left_hand_width) . ', ' . strval($left_handy + $left_hand_height);
+    $right_hand_position = strval($right_handx) . ', ' . strval($right_handy) . ', ' . strval($right_handx + $right_hand_width) . ', ' . strval($right_handy + $right_hand_height);
 
     //Modify post
     $content = '<img src="' . $image_file . '" alt="' . $cname . '" usemap="#costumemap">
