@@ -246,7 +246,7 @@ function myAjaxFunction() {
 
     //Load image resources
     //$file = imageCreateFromJPEG($hands['pictURL']);
-    $head_file = imageCreateFromJPEG(dirname(__FILE__) . '/images/head.jpg');
+    $head_file = imageCreateFromJPEG($heads["pictURL"]);
     $background_file = imageCreateFromJPEG(dirname(__FILE__) . '/images/background.jpg');
     $body_file = imageCreateFromJPEG(dirname(__FILE__) . '/images/body.jpg');
     $feet_file = imageCreateFromJPEG(dirname(__FILE__) . '/images/feet.jpg');
@@ -255,7 +255,7 @@ function myAjaxFunction() {
     $right_hand_file = imageCreateFromJPEG(dirname(__FILE__) . '/images/righthand.jpg');
 
     //Scale images
-    $background_scaled = scale_image($background_file, 1150, 1500);
+    $background_scaled = scale_image($background_file, 1500, 1500);
     $head_scaled = scale_image($head_file, 160, 160);
     $body_scaled = scale_image($body_file, 160, 160);
     $feet_scaled = scale_image($feet_file, 160, 160);
@@ -342,6 +342,7 @@ function myAjaxFunction() {
 <area shape="rect" coords="' . $right_hand_position . '" alt="Right Hand" href="right_hand.htm">
 <area shape="rect" coords="' . $left_hand_position . '" alt="Left Hand" href="left_hand.htm">
 </map><br>
+Head pict URL = ' . $heads["pictURL"] . '<br>
 Head position = ' . $head_position . '<br>
     Head x position = ' . $head_x . '<br>
         Head y position = ' . $head_y . '<br>
@@ -405,8 +406,6 @@ function uploadAjaxFunction() {
     global $table_prefix;
     $table_name = $table_prefix . "costumesdb";
     global $wpdb;
-    $result;
-    $resp;
     $pieceName = $_POST['pieceName'];
     $location = $_POST['location'];
     $shopURL = $_POST['shopURL'];
