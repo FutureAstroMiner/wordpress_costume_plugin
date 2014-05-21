@@ -126,10 +126,12 @@ add_action( 'after_setup_theme', 'twentyfourteen_setup' );
  */
 function twentyfourteen_content_width() {
 	if ( is_attachment() && wp_attachment_is_image() ) {
-		$GLOBALS['content_width'] = 810;
+		$GLOBALS['content_width'] = 1200;
 	}
 }
 add_action( 'template_redirect', 'twentyfourteen_content_width' );
+
+$GLOBALS['content_width'] = 1200;
 
 /**
  * Getter function for Featured Content Plugin.
