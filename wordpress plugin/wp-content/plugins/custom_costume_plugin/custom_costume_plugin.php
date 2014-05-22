@@ -79,6 +79,16 @@ function on_activate() {
 
     require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
     dbDelta($sql);
+    dummyData();
+}
+
+function dummyData() {
+    dbDelta("INSERT INTO `wordpress`.`wp_costumesdb` (`id`, `shopName`, `pieceName`, `location`, `shopUrl`, `pictUrl`) VALUES (NULL, 'head shop', 'head piece', 'head', 'head_shop_URL', '/images/head.jpg')");
+    dbDelta("INSERT INTO `wordpress`.`wp_costumesdb` (`id`, `shopName`, `pieceName`, `location`, `shopUrl`, `pictUrl`) VALUES (NULL, 'body shop', 'body piece', 'body', 'body_shop_URL', '/images/body.jpg')");
+    dbDelta("INSERT INTO `wordpress`.`wp_costumesdb` (`id`, `shopName`, `pieceName`, `location`, `shopUrl`, `pictUrl`) VALUES (NULL, 'legs shop', 'legs piece', 'legs', 'legs_shop_URL', '/images/legs.jpg')");
+    dbDelta("INSERT INTO `wordpress`.`wp_costumesdb` (`id`, `shopName`, `pieceName`, `location`, `shopUrl`, `pictUrl`) VALUES (NULL, 'feet shop', 'feet piece', 'feet', 'feet_shop_URL', '/images/feet.jpg')");
+    dbDelta("INSERT INTO `wordpress`.`wp_costumesdb` (`id`, `shopName`, `pieceName`, `location`, `shopUrl`, `pictUrl`) VALUES (NULL, 'lefthand shop', 'lefthand piece', 'hand', 'lefthand_shop_URL', '/images/lefthand.jpg')");
+dbDelta("INSERT INTO `wordpress`.`wp_costumesdb` (`id`, `shopName`, `pieceName`, `location`, `shopUrl`, `pictUrl`) VALUES (NULL, 'righthand shop', 'righthand piece', 'hand', 'lefthand_shop_URL', '/images/righthand.jpg')");
 }
 
 register_uninstall_hook(__FILE__, 'on_uninstall');
