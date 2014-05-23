@@ -123,6 +123,7 @@ function customcostume_admin() {
 //Handle the upload
 
 function customcostume_handle_upload() {
+//    wp_enqueue_media();
     ?>
     <!DOCTYPE html>
     <html>
@@ -140,7 +141,21 @@ function customcostume_handle_upload() {
                 Shop URL: <input type="text" name="shopURL">                <br>
                 Picture URL: <input type="text" name="pictURL">                <br>
                 <input type="submit" name="submit" class="button" id="submit_btn"/> </form>
+                <label for="upload_image">
+    <input id="upload_image" type="text" size="36" name="ad_image" value="http://" />
+    <input id="upload_image_button" class="button" type="button" value="Upload Image" />
+    <br />Enter a URL or upload an image
+</label>
         </body>    </html> <?php
+}
+add_action('admin_enqueue_scripts', 'my_admin_scripts');
+ 
+function my_admin_scripts() {
+    if (isset($_GET['page']) && $_GET['page'] == 'upload_costume') {
+        wp_enqueue_media();
+        wp_register_script('my-admin-js', WP_PLUGIN_URL.'/custom_costume_plugin/my-admin.js', array('jquery'));
+        wp_enqueue_script('my-admin-js');
+    }
 }
 
 function customcostume_posts_actions() {
@@ -209,9 +224,9 @@ function customcostume_posts() { // need to fill out options from database http:
 function add_myjavascript() {
     if ($_GET["page"] == 'create_costume') {
         wp_enqueue_script('ajax-implementation.js', plugins_url() . "/custom_costume_plugin/ajax-implementation.js", array('jquery'));
-    } else {
-        wp_enqueue_script('ajax-upload.js', plugins_url() . "/custom_costume_plugin/ajax-upload.js", array('jquery'));
-    }
+    } //else {
+//        wp_enqueue_script('ajax-upload.js', plugins_url() . "/custom_costume_plugin/ajax-upload.js", array('jquery'));
+//    }
 }
 
 add_action('wp_print_scripts', 'add_myjavascript');
