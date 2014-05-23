@@ -79,7 +79,7 @@ function on_activate() {
 
     require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
     dbDelta($sql);
-    dummyData();
+//    dummyData();
 }
 
 function dummyData() {
@@ -256,13 +256,13 @@ function myAjaxFunction() {
 
     //Load image resources
     //$file = imageCreateFromJPEG($hands['pictURL']);
-    $head_file = imageCreateFromJPEG($heads["pictURL"]);
+    $head_file = imageCreateFromJPEG(dirname(__FILE__) . $heads["pictUrl"]);
     $background_file = imageCreateFromJPEG(dirname(__FILE__) . '/images/background.jpg');
-    $body_file = imageCreateFromJPEG(dirname(__FILE__) . '/images/body.jpg');
-    $feet_file = imageCreateFromJPEG(dirname(__FILE__) . '/images/feet.jpg');
-    $legs_file = imageCreateFromJPEG(dirname(__FILE__) . '/images/legs.jpg');
-    $left_hand_file = imageCreateFromJPEG(dirname(__FILE__) . '/images/lefthand.jpg');
-    $right_hand_file = imageCreateFromJPEG(dirname(__FILE__) . '/images/righthand.jpg');
+    $body_file = imageCreateFromJPEG(dirname(__FILE__) . $bodys["pictUrl"]);
+    $feet_file = imageCreateFromJPEG(dirname(__FILE__) . $feets["pictUrl"]);
+    $legs_file = imageCreateFromJPEG(dirname(__FILE__) . $legss["pictUrl"]);
+    $left_hand_file = imageCreateFromJPEG(dirname(__FILE__) . $lhands["pictUrl"]);
+    $right_hand_file = imageCreateFromJPEG(dirname(__FILE__) . $rhands["pictUrl"]);
 
     //Scale images
     $background_scaled = scale_image($background_file, 1500, 1500);
@@ -352,7 +352,7 @@ function myAjaxFunction() {
 <area shape="rect" coords="' . $right_hand_position . '" alt="Right Hand" href="right_hand.htm">
 <area shape="rect" coords="' . $left_hand_position . '" alt="Left Hand" href="left_hand.htm">
 </map><br>
-Head pict URL = ' . $heads["pictURL"] . '<br>
+Head pict URL = ' . dirname(__FILE__) . $heads["pictUrl"] . '<br>
 Head position = ' . $head_position . '<br>
     Head x position = ' . $head_x . '<br>
         Head y position = ' . $head_y . '<br>
