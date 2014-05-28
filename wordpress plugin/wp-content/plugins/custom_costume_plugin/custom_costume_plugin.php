@@ -72,8 +72,8 @@ function on_activate() {
   shopName text NOT NULL,
   pieceName text NOT NULL,
   location text NOT NULL,
-  shopUrl VARCHAR(55) DEFAULT '' NOT NULL,
-    pictUrl VARCHAR(55) DEFAULT '' NOT NULL,
+  shopUrl VARCHAR(128) DEFAULT '' NOT NULL,
+    pictUrl VARCHAR(128) DEFAULT '' NOT NULL,
   UNIQUE KEY id (id)
 );";
 
@@ -88,7 +88,7 @@ function dummyData() {
     dbDelta("INSERT INTO `wordpress`.`wp_costumesdb` (`id`, `shopName`, `pieceName`, `location`, `shopUrl`, `pictUrl`) VALUES (NULL, 'legs shop', 'legs piece', 'legs', 'legs_shop_URL', '/images/legs.jpg')");
     dbDelta("INSERT INTO `wordpress`.`wp_costumesdb` (`id`, `shopName`, `pieceName`, `location`, `shopUrl`, `pictUrl`) VALUES (NULL, 'feet shop', 'feet piece', 'feet', 'feet_shop_URL', '/images/feet.jpg')");
     dbDelta("INSERT INTO `wordpress`.`wp_costumesdb` (`id`, `shopName`, `pieceName`, `location`, `shopUrl`, `pictUrl`) VALUES (NULL, 'lefthand shop', 'lefthand piece', 'hand', 'lefthand_shop_URL', '/images/lefthand.jpg')");
-dbDelta("INSERT INTO `wordpress`.`wp_costumesdb` (`id`, `shopName`, `pieceName`, `location`, `shopUrl`, `pictUrl`) VALUES (NULL, 'righthand shop', 'righthand piece', 'hand', 'lefthand_shop_URL', '/images/righthand.jpg')");
+    dbDelta("INSERT INTO `wordpress`.`wp_costumesdb` (`id`, `shopName`, `pieceName`, `location`, `shopUrl`, `pictUrl`) VALUES (NULL, 'righthand shop', 'righthand piece', 'hand', 'lefthand_shop_URL', '/images/righthand.jpg')");
 }
 
 register_uninstall_hook(__FILE__, 'on_uninstall');
@@ -138,21 +138,23 @@ function customcostume_handle_upload() {
                     <option value="feet">Feet</option>
                 </select>                <br>
                 Shop URL: <input type="text" name="shopURL">                <br>
-                Picture URL: <input type="text" name="pictURL">                <br>
-                <input type="submit" name="submit" class="button" id="submit_btn"/> </form>
+                Picture URL: <!--<input type="text" name="pictURL">-->                <br>
                 <label for="upload_image">
-    <input id="upload_image" type="text" size="36" name="ad_image" value="http://" />
-    <input id="upload_image_button" class="button" type="button" value="Upload Image" />
-    <br />Enter a URL or upload an image
-</label>
-        </body>    </html> <?php
+                    <input id="upload_image" type="text" size="36" name="pictURL" value="http://" />
+                    <input id="upload_image_button" class="button" type="button" value="Upload Image" />
+                <input type="submit" name="submit" class="button" id="submit_btn"/> </form>
+
+            <br />Enter a URL or upload an image
+        </label>
+    </body>    </html> <?php
 }
+
 add_action('admin_enqueue_scripts', 'my_admin_scripts');
- 
+
 function my_admin_scripts() {
     if (isset($_GET['page']) && $_GET['page'] == 'upload_costume') {
         wp_enqueue_media();
-        wp_register_script('my-admin.js', WP_PLUGIN_URL.'/custom_costume_plugin/my-admin.js', array('jquery'));
+        wp_register_script('my-admin.js', WP_PLUGIN_URL . '/custom_costume_plugin/my-admin.js', array('jquery'));
         wp_enqueue_script('my-admin.js');
     }
 }
@@ -185,32 +187,32 @@ function customcostume_posts() { // need to fill out options from database http:
                 Head: <select name="head">
                     <?php foreach ($heads as $head) { ?>
                         <option value="<?php echo $head['id'] ?>"><?php echo $head['shopName'] . " - " . $head['pieceName'] ?></option>
-                    <?php } ?>
+    <?php } ?>
                 </select><br>
                 Right Hand: <select name="rightHand">
                     <?php foreach ($hands as $hand) { ?>
                         <option value="<?php echo $hand['id'] ?>"><?php echo $hand['shopName'] . " - " . $hand['pieceName'] ?></option>
-                    <?php } ?>
+    <?php } ?>
                 </select><br>
                 Left Hand: <select name="leftHand">
                     <?php foreach ($hands as $hand) { ?>
                         <option value="<?php echo $hand['id'] ?>"><?php echo $hand['shopName'] . " - " . $hand['pieceName'] ?></option>
-                    <?php } ?>
+    <?php } ?>
                 </select><br>
                 Body: <select name="body">
                     <?php foreach ($bodys as $body) { ?>
                         <option value="<?php echo $body['id'] ?>"><?php echo $body['shopName'] . " - " . $body['pieceName'] ?></option>
-                    <?php } ?>
+    <?php } ?>
                 </select><br>
                 Legs: <select name="legs">
                     <?php foreach ($legs as $leg) { ?>
                         <option value="<?php echo $leg['id'] ?>"><?php echo $leg['shopName'] . " - " . $leg['pieceName'] ?></option>
-                    <?php } ?>
+    <?php } ?>
                 </select><br>
                 Feet: <select name="feet">
                     <?php foreach ($feets as $feet) { ?>
                         <option value="<?php echo $feet['id'] ?>"><?php echo $feet['shopName'] . " - " . $feet['pieceName'] ?></option>
-                    <?php } ?>
+    <?php } ?>
                 </select>                <br>
                 <input type="submit" name="submit" class="button" id="submit_btn"/>
             </form>
@@ -223,9 +225,9 @@ function customcostume_posts() { // need to fill out options from database http:
 function add_myjavascript() {
     if ($_GET["page"] == 'create_costume') {
         wp_enqueue_script('ajax-implementation.js', plugins_url() . "/custom_costume_plugin/ajax-implementation.js", array('jquery'));
-    } //else {
-//        wp_enqueue_script('ajax-upload.js', plugins_url() . "/custom_costume_plugin/ajax-upload.js", array('jquery'));
-//    }
+    } else {
+        wp_enqueue_script('ajax-upload.js', plugins_url() . "/custom_costume_plugin/ajax-upload.js", array('jquery'));
+    }
 }
 
 add_action('wp_print_scripts', 'add_myjavascript');
@@ -267,7 +269,6 @@ function myAjaxFunction() {
     $wpdb->flush();
 
     //TODO Get image locations from database and load them as image resourses
-
     //Load image resources
     //$file = imageCreateFromJPEG($hands['pictURL']);
     $head_file = imageCreateFromJPEG(dirname(__FILE__) . $heads["pictUrl"]);

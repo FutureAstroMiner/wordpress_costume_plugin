@@ -1015,7 +1015,7 @@ span + .edit-link:before,
 
 .hentry {
 	margin: 0 auto 48px;
-	max-width: 672px;
+	max-width: 1500px;
 }
 
 .site-content .entry-header,
@@ -1024,7 +1024,7 @@ span + .edit-link:before,
 .site-content .entry-meta,
 .page-content {
 	margin: 0 auto;
-	max-width: 474px;
+	max-width: 1500px;
 }
 
 .page-content {
