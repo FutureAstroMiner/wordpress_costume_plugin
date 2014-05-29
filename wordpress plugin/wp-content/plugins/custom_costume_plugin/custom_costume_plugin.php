@@ -141,11 +141,11 @@ function customcostume_handle_upload() {
                 Picture URL: <!--<input type="text" name="pictURL">-->                <br>
                 <label for="upload_image">
                     <input id="upload_image" type="text" size="36" name="pictURL" value="http://" />
-                    <input id="upload_image_button" class="button" type="button" value="Upload Image" />
+                    <input id="upload_image_button" class="button" type="button" value="Upload Image" /></label> <br>
                 <input type="submit" name="submit" class="button" id="submit_btn"/> </form>
 
             <br />Enter a URL or upload an image
-        </label>
+        
     </body>    </html> <?php
 }
 
@@ -281,12 +281,12 @@ function myAjaxFunction() {
 
     //Scale images
     $background_scaled = scale_image($background_file, 1500, 1500);
-    $head_scaled = scale_image($head_file, 160, 160);
-    $body_scaled = scale_image($body_file, 160, 160);
-    $feet_scaled = scale_image($feet_file, 160, 160);
-    $legs_scaled = scale_image($legs_file, 160, 160);
-    $left_hand_scaled = scale_image($left_hand_file, 160, 160);
-    $right_hand_scaled = scale_image($right_hand_file, 160, 160);
+    $head_scaled = scale_image($head_file, 180, 180);
+    $body_scaled = scale_image($body_file, 450, 450);
+    $feet_scaled = scale_image($feet_file, 300, 300);
+    $legs_scaled = scale_image($legs_file, 300, 300);
+    $left_hand_scaled = scale_image($left_hand_file, 250, 250);
+    $right_hand_scaled = scale_image($right_hand_file, 250, 250);
 
     //Scaled image sizes
     $background_width = imageSX($background_scaled);
@@ -312,21 +312,21 @@ function myAjaxFunction() {
 
     //Locations of where the images go on the background. Use them in the image map?
     $head_x = intval(( $background_width / 2 ) - ( $head_width / 2 ));
-    $head_y = intval(( $background_height / 9 ) - ( $head_height / 2 ));
+    $head_y = 5;
 
     $body_x = intval(($background_width / 2) - ($body_width / 2));
-    $body_y = intval(($background_height / 4) - ($body_height / 2));
+    $body_y = intval(($background_height / 3) - ($body_height / 2));
 
     $feetx = intval(( $background_width / 2 ) - ( $feet_width / 2 ));
-    $feety = intval(( $background_height ) - ( $feet_height));
+    $feety = intval(( $background_height ) - ( $feet_height) -5);
 
     $legsx = intval(( $background_width / 2) - ( $legs_width / 2 ));
-    $legsy = intval(( 3 * $background_height / 4 ) - ( $feet_height / 2 ));
+    $legsy = intval(( 2 * $background_height / 3 ) - ( $feet_height / 2 ));
 
-    $left_handx = intval(( $background_width / 4) - ( $left_hand_width / 2 ));
+    $left_handx = 5;
     $left_handy = intval(( $background_height / 2 ) - ( $left_hand_height / 2 ));
 
-    $right_handx = intval(( 3 * $background_width / 4) - ( $right_hand_width / 2 ));
+    $right_handx = intval(( $background_width) - ( $right_hand_width ) -5);
     $right_handy = intval(( $background_height / 2 ) - ( $right_hand_height / 2 ));
 
     //Merg the images
