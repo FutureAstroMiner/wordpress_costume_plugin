@@ -379,8 +379,9 @@ Head position = ' . $head_position . '<br>
             Right hand pos = ' . $right_hand_position . '<br>
            Left hand pos = ' . $left_hand_position . '<br>';
     $modified_post = array(
-        'post_content' => $content,
         'ID' => $post_id,
+        'post_content' => $content,
+        
     );
 
     wp_update_post($modified_post);
