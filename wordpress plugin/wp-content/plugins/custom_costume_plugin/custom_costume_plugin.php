@@ -385,6 +385,9 @@ Head position = ' . $head_position . '<br>
     );
 
     wp_update_post($modified_post);
+    
+    $url = get_permalink($post_id);
+    wp_redirect($url);
 
     die($post_id);
 }

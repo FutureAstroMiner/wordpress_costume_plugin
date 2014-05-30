@@ -19,7 +19,8 @@ jQuery(document).ready(function() {
 
             success: function(resp) {
 //                console.log(resp);
-                alert("We need to approve this '" + resp + "'");
+                alert("We need to approve this '"// + resp + "'");
+                );
 
             },
 //            done: function(r) {
