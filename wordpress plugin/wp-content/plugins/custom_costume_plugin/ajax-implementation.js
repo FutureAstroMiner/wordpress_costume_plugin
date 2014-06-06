@@ -21,6 +21,7 @@ jQuery(document).ready(function() {
             success: function(resp) {
 //                console.log(resp);
                 alert("Thank you for your post. We will review it and approve it shortly" + resp);
+                window.location.href = resp;
 
             },
             error: function( req, status, err ) {

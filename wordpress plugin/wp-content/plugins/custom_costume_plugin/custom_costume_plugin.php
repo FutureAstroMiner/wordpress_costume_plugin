@@ -386,10 +386,10 @@ Head position = ' . $head_position . '<br>
 
     wp_update_post($modified_post);
     
-    $url = get_edit_post_link($post_id);
-    wp_redirect($url);
+    $url = strval('http://localhost/wp-admin/post.php?post='.$post_id.'&action=edit');
+//    wp_redirect($url);
 
-    die($post_id);
+    die($url);
 }
 
 //Generic function to scale an image to fit in a box keeping the aspect ratio of the original image
