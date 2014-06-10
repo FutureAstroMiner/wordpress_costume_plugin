@@ -178,10 +178,7 @@ function customcostume_posts() { // need to fill out options from database http:
     echo $_GET["page"];
     ?>
     <!DOCTYPE html>
-    <html>
-        <head>
-        </head>
-        <body>
+
             <form id="createacostume" action= "">
                 Costume Name: <input type="text" name="cname"><br>
                 Head: <select name="head">
@@ -216,8 +213,8 @@ function customcostume_posts() { // need to fill out options from database http:
                 </select>                <br>
                 <input type="submit" name="submit" class="button" id="submit_btn"/>
             </form>
-        </body>
-    </html> 
+            <div id='spinner' class='spinner'></div>
+
     <?php
     $wpdb->flush();
 }
