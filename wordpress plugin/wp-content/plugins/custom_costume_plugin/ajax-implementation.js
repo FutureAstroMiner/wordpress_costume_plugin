@@ -21,12 +21,15 @@ var opts = {
     top: 'auto', // Top position relative to parent in px
     left: 'auto' // Left position relative to parent in px
 };
-var spinner = require('/spin');
+//var spinnerScript = require('/spin');
+var spinner = null;
 var spinner_div = 0;
 jQuery(document).ready(function() {
+    
     jQuery('#createacostume').submit(function(event) {
         event.preventDefault();
-        if (spinner === null) {
+        spinner_div = $('#spinner').get(0);
+        if (spinner == null) {
             spinner = new Spinner(opts).spin(spinner_div);
         } else {
             spinner.spin(spinner_div);
@@ -37,25 +40,34 @@ jQuery(document).ready(function() {
         jQuery.ajax({
             url: ajaxurl,
             type: "POST",
-            data: bForm,
+            data: bForm
 //            dataType: "json",
 
 
 
-            success: function(resp) {
-//                console.log(resp);
-                alert("Thank you for your post. We will review it and approve it shortly" + resp);
-                spinner.stop(spinner_div);
-                window.location.href = resp;
-            },
-            error: function(req, status, err) {
-                spinner.stop(spinner_div);
-                alert('something went wrong, Status: ' + status + ' and error: ' + err);
-            }
+//            success: function(resp) {
+////                console.log(resp);
+//                alert("Thank you for your post. We will review it and approve it shortly" + resp);
+//                spinner.stop(spinner_div);
+//                window.location.href = resp;
+//            },
+//            error: function(req, status, err) {
+//                spinner.stop(spinner_div);
+//                alert('something went wrong, Status: ' + status + ' and error: ' + err);
+//            }
         })
 //                .done(function(secResp) {
 //            alert("second response: " + secResp);
 //        })
+        .success(function(resp) {
+            alert("Thank you for your post. We will review it and approve it shortly" + resp);
+                spinner.stop(spinner_div);
+                window.location.href = resp;
+        })
+                .error(function(req, status, err) {
+                    spinner.stop(spinner_div);
+                alert('something went wrong, Status: ' + status + ' and error: ' + err);
+        })
                 .fail(function() {
                     alert("error");
                 })

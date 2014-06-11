@@ -220,6 +220,7 @@ function customcostume_posts() { // need to fill out options from database http:
 }
 
 function add_myjavascript() {
+    wp_enqueue_script('spin.js', plugins_url() . "/custom_costume_plugin/spin.js", array('jquery'));
     if ($_GET["page"] == 'create_costume') {
         wp_enqueue_script('ajax-implementation.js', plugins_url() . "/custom_costume_plugin/ajax-implementation.js", array('jquery'));
     } else {
