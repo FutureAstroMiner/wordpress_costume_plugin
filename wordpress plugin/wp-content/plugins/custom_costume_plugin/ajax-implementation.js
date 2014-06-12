@@ -23,12 +23,12 @@ var opts = {
 };
 //var spinnerScript = require('/spin');
 var spinner = null;
-var spinner_div = 0;
+//var spinner_div = 0;
+var spinner_div = document.getElementById('spinner');
 jQuery(document).ready(function() {
-    
+    spinner = new Spinner(opts).spin(spinner_div);
     jQuery('#createacostume').submit(function(event) {
         event.preventDefault();
-        spinner_div = $('#spinner').get(0);
         if (spinner == null) {
             spinner = new Spinner(opts).spin(spinner_div);
         } else {
@@ -61,11 +61,11 @@ jQuery(document).ready(function() {
 //        })
         .success(function(resp) {
             alert("Thank you for your post. We will review it and approve it shortly" + resp);
-                spinner.stop(spinner_div);
+//                spinner.stop(spinner_div);
                 window.location.href = resp;
         })
                 .error(function(req, status, err) {
-                    spinner.stop(spinner_div);
+//                    spinner.stop(spinner_div);
                 alert('something went wrong, Status: ' + status + ' and error: ' + err);
         })
                 .fail(function() {
