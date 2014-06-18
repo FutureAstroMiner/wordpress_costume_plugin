@@ -26,51 +26,58 @@ var spinner = null;
 //var spinner_div = 0;
 var spinner_div = document.getElementById('spinner');
 jQuery(document).ready(function() {
-    spinner = new Spinner(opts).spin(spinner_div);
+    $("#submit_btn").bind("ajaxSend", function() {
+        spinner = new Spinner(opts).spin(spinner_div);
+    }).bind("ajaxStop", function() {
+        spinner.stop(spinner_div);
+    }).bind("ajaxError", function() {
+        spinner.stop(spinner_div);
+    });
+//    spinner = new Spinner(opts).spin(spinner_div);
     jQuery('#createacostume').submit(function(event) {
         event.preventDefault();
-        if (spinner == null) {
-            spinner = new Spinner(opts).spin(spinner_div);
-        } else {
-            spinner.spin(spinner_div);
-        }
+//        if (spinner == null) {
+//            spinner = new Spinner(opts).spin(spinner_div);
+//        } else {
+//            spinner.spin(spinner_div);
+//        }
         var aForm = jQuery(this);
         var bForm = aForm.serializeArray();
         bForm.push({name: 'action', value: 'myAjaxFunction'});
         jQuery.ajax({
             url: ajaxurl,
             type: "POST",
-            data: bForm
+            data: bForm,
 //            dataType: "json",
 
 
 
-//            success: function(resp) {
-////                console.log(resp);
-//                alert("Thank you for your post. We will review it and approve it shortly" + resp);
+            success: function(resp) {
+//                console.log(resp);
+                alert("Thank you for your post. We will review it and approve it shortly" + resp);
 //                spinner.stop(spinner_div);
-//                window.location.href = resp;
-//            },
-//            error: function(req, status, err) {
-//                spinner.stop(spinner_div);
-//                alert('something went wrong, Status: ' + status + ' and error: ' + err);
-//            }
+                window.location.href = resp;
+            },
+            error: function(req, status, err) {
+                spinner.stop(spinner_div);
+                alert('something went wrong, Status: ' + status + ' and error: ' + err);
+            }
         })
 //                .done(function(secResp) {
 //            alert("second response: " + secResp);
 //        })
-        .success(function(resp) {
-            alert("Thank you for your post. We will review it and approve it shortly" + resp);
-//                spinner.stop(spinner_div);
-                window.location.href = resp;
-        })
-                .error(function(req, status, err) {
-//                    spinner.stop(spinner_div);
-                alert('something went wrong, Status: ' + status + ' and error: ' + err);
-        })
-                .fail(function() {
-                    alert("error");
-                })
+//        .success(function(resp) {
+//            alert("Thank you for your post. We will review it and approve it shortly" + resp);
+////                spinner.stop(spinner_div);
+//                window.location.href = resp;
+//        })
+//                .error(function(req, status, err) {
+////                    spinner.stop(spinner_div);
+//                alert('something went wrong, Status: ' + status + ' and error: ' + err);
+//        })
+//                .fail(function() {
+//                    alert("error");
+//                })
                 ;
         return false;
     });
