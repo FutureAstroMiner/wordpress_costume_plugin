@@ -22,17 +22,25 @@ var opts = {
     left: 'auto' // Left position relative to parent in px
 };
 //var spinnerScript = require('/spin');
-var spinner = null;
+//var spinner = null;
 //var spinner_div = 0;
-var spinner_div = document.getElementById('spinner');
+//var spinner_div = document.getElementById('spinner');
+var $loading = $('#spinner').hide();
+$(document)
+  .ajaxStart(function () {
+    $loading.show();
+  })
+  .ajaxStop(function () {
+    $loading.hide();
+  });
 jQuery(document).ready(function() {
-    $("#submit_btn").bind("ajaxSend", function() {
-        spinner = new Spinner(opts).spin(spinner_div);
-    }).bind("ajaxStop", function() {
-        spinner.stop(spinner_div);
-    }).bind("ajaxError", function() {
-        spinner.stop(spinner_div);
-    });
+//    $("#spinner").bind("ajaxSend", function() {
+//        $(this).show();
+//    }).bind("ajaxStop", function() {
+//        $(this).hide();
+//    }).bind("ajaxError", function() {
+//        $(this).hide();
+//    });
 //    spinner = new Spinner(opts).spin(spinner_div);
     jQuery('#createacostume').submit(function(event) {
         event.preventDefault();
@@ -59,7 +67,7 @@ jQuery(document).ready(function() {
                 window.location.href = resp;
             },
             error: function(req, status, err) {
-                spinner.stop(spinner_div);
+//                spinner.stop(spinner_div);
                 alert('something went wrong, Status: ' + status + ' and error: ' + err);
             }
         })

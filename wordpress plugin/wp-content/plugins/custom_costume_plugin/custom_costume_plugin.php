@@ -213,7 +213,8 @@ function customcostume_posts() { // need to fill out options from database http:
                 </select>                <br>
                 <input type="submit" name="submit" class="button" id="submit_btn"/>
             </form>
-            <div id='spinner' class='spinner'></div>
+            <div id='spinner' class='spinner' style="display:none;">
+    <img id="img-spinner" src="head.jpg" alt="Loading"/></div>
 
     <?php
     $wpdb->flush();
