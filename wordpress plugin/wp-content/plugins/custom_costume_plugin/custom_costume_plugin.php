@@ -73,7 +73,7 @@ function on_activate() {
   pieceName text NOT NULL,
   location text NOT NULL,
   shopUrl VARCHAR(128) DEFAULT '' NOT NULL,
-    pictUrl VARCHAR(128) DEFAULT '' NOT NULL,
+  pictUrl VARCHAR(128) DEFAULT '' NOT NULL,
   UNIQUE KEY id (id)
 );";
 
@@ -213,8 +213,8 @@ function customcostume_posts() { // need to fill out options from database http:
                 </select>                <br>
                 <input type="submit" name="submit" class="button" id="submit_btn"/>
             </form>
-            <div id='spinner' class='spinner' style="display:none;">
-    <img id="img-spinner" src="head.jpg" alt="Loading"/></div>
+           <!--<div id='spinner' class='spinner' style="display:none;">
+    <img id="img-spinner" src="head.jpg" alt="Loading"/></div>-->
 
     <?php
     $wpdb->flush();
@@ -270,7 +270,13 @@ function myAjaxFunction() {
     //TODO Get image locations from database and load them as image resourses
     //Load image resources
     //$file = imageCreateFromJPEG($hands['pictURL']);
+    if (substr($heads["pictUrl"], 0, 1) == "/")
+    {
     $head_file = imageCreateFromJPEG(dirname(__FILE__) . $heads["pictUrl"]);
+    }
+ else {
+        $head_file = $heads["pictUrl"];
+    }
     $background_file = imageCreateFromJPEG(dirname(__FILE__) . '/images/background.jpg');
     $body_file = imageCreateFromJPEG(dirname(__FILE__) . $bodys["pictUrl"]);
     $feet_file = imageCreateFromJPEG(dirname(__FILE__) . $feets["pictUrl"]);
@@ -366,7 +372,7 @@ function myAjaxFunction() {
 <area shape="rect" coords="' . $right_hand_position . '" alt="Right Hand" href="right_hand.htm">
 <area shape="rect" coords="' . $left_hand_position . '" alt="Left Hand" href="left_hand.htm">
 </map><br>
-Head pict URL = ' . dirname(__FILE__) . $heads["pictUrl"] . '<br>
+Head pict URL = ' . $heads["pictUrl"] . '<br>
 Head position = ' . $head_position . '<br>
     Head x position = ' . $head_x . '<br>
         Head y position = ' . $head_y . '<br>
