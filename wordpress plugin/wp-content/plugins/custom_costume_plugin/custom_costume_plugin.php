@@ -143,9 +143,7 @@ function customcostume_handle_upload() {
                     <input id="upload_image" type="text" size="36" name="pictURL" value="http://" />
                     <input id="upload_image_button" class="button" type="button" value="Upload Image" /></label> <br>
                 <input type="submit" name="submit" class="button" id="submit_btn"/> </form>
-
             <br />Enter a URL or upload an image
-        
     </body>    </html> <?php
 }
 
@@ -234,6 +232,8 @@ add_action('wp_print_scripts', 'add_myjavascript');
 //Create the post
 function myAjaxFunction() {
     global $wpdb;
+    global $current_user;
+    get_currentuserinfo();
 
     $cname = $_POST['cname'];
     $head = (int) ( $_POST['head'] ); //tested and is an int
@@ -254,7 +254,7 @@ function myAjaxFunction() {
     //Creating original post
     $post = array(
         'ping_status' => get_option('default_ping_status'),
-        'post_author' => $user_ID, //The user ID number of the author.
+        'post_author' => $current_user->display_name, //The user ID number of the author.
 //        'post_content' => $content,
 //The full text of the post.
         'post_name' => $cname, // The name (slug) for your post
@@ -435,8 +435,11 @@ function register_plugin_styles() {
     wp_enqueue_style('custom_costume_plugin');
 }
 
-//Not currently used
+//Upload the image
 function uploadAjaxFunction() {
+    global $current_user;
+    get_currentuserinfo();
+    
     global $table_prefix;
     $table_name = $table_prefix . "costumesdb";
     global $wpdb;
@@ -444,12 +447,13 @@ function uploadAjaxFunction() {
     $location = $_POST['location'];
     $shopURL = $_POST['shopURL'];
     $pictURL = $_POST['pictURL'];
-    $shopName = 'A Shop';
+    $shopName = $current_user->display_name;
+    copy($pictURL,dirname(__FILE__) . '/images/' . $shopName. '_' . $pieceName . '_' . basename($pictURL));
     $result = $wpdb->insert($table_name, array('shopName' => $shopName,
         'pieceName' => $pieceName,
         'location' => $location,
         'shopURL' => $shopURL,
-        'pictURL' => $pictURL), array(
+        'pictURL' => '/images/' . $shopName. '_' . $pieceName . '_' . basename($pictURL)), array(
         '%s',
         '%s',
         '%s',
@@ -466,13 +470,13 @@ function uploadAjaxFunction() {
     die($result);
 }
 
-function add_piece_to_db($pieceName, $location, $shopURL, $pictURL) {
-    $shopName = 'A Shop';
-
-    $wpdb->insert($table_name, array('shopName' => $shopName,
-        'pieceName' => $piece_name,
-        'location' => $location,
-        'shopURL' => $shopURL,
-        'pictURL' => $pictURL));
-}
+//function add_piece_to_db($pieceName, $location, $shopURL, $pictURL) {
+//    $shopName = 'A Shop';
+//
+//    $wpdb->insert($table_name, array('shopName' => $shopName,
+//        'pieceName' => $piece_name,
+//        'location' => $location,
+//        'shopURL' => $shopURL,
+//        'pictURL' => $pictURL));
+//}
 ?>
