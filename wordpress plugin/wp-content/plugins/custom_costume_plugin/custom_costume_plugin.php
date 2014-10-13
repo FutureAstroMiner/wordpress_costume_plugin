@@ -448,18 +448,25 @@ function uploadAjaxFunction() {
     $shopURL = $_POST['shopURL'];
     $pictURL = $_POST['pictURL'];
     $shopName = $current_user->display_name;
-    copy($pictURL,dirname(__FILE__) . '/images/' . $shopName. '_' . $pieceName . '_' . basename($pictURL));
+    // This is not creating the folder
+    if (file_exists('\\images\\' . $shopName)) {
+        mkdir('\\images\\' . $shopName, 0777, true);
+    }
+    // This is not copying the file. I think it is the If statement above.
+    copy($pictURL, dirname(__FILE__) . '\\images\\' . $shopName. '\\' . $pieceName . '_' . basename($pictURL));
     $result = $wpdb->insert($table_name, array('shopName' => $shopName,
         'pieceName' => $pieceName,
         'location' => $location,
         'shopURL' => $shopURL,
-        'pictURL' => '/images/' . $shopName. '_' . $pieceName . '_' . basename($pictURL)), array(
+        'pictURL' => '\\images\\' . $shopName. '\\' . $pieceName . '_' . basename($pictURL)), array(
         '%s',
         '%s',
         '%s',
         '%s',
         '%s',
     ));
+    $toremove = $wpdb->get_results( 'SELECT * FROM wp_posts WHERE guid = '.$pictURL);
+    wp_delete_post($toremove);
 //    if ($result === FALSE) {
 //        die(0);
 //    } else {
@@ -467,7 +474,8 @@ function uploadAjaxFunction() {
 //    }
 // "Name $pieceName location $location Shop $shopName shopURL $shopURL pictURL $pictURL"
 //    add_piece_to_db($pieceName, $location, $shopURL, $pictURL);
-    die($result);
+//    die($result);
+    die('I removed post with ID '.$toremove);
 }
 
 //function add_piece_to_db($pieceName, $location, $shopURL, $pictURL) {
