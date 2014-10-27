@@ -143,8 +143,15 @@ function customcostume_handle_upload() {
                     <input id="upload_image" type="text" size="36" name="pictURL" value="http://" />
                     <input id="upload_image_button" class="button" type="button" value="Upload Image" /></label> <br>
                 <input type="submit" name="submit" class="button" id="submit_btn"/> </form>
-            <br />Enter a URL or upload an image
-    </body>    </html> <?php
+            <br>Enter a URL or upload an image<br>
+            <p>
+                <label for="example-jpg-file">
+                    Select File To Upload:
+                </label>
+                <input type="file" id="example-jpg-file" name="example-jpg-file" value="" />
+                <?php wp_nonce_field(plugin_basename(__FILE__), 'example-jpg-nonce'); ?>
+            </p>
+        </body>    </html> <?php
 }
 
 add_action('admin_enqueue_scripts', 'my_admin_scripts');
@@ -177,41 +184,41 @@ function customcostume_posts() { // need to fill out options from database http:
     ?>
     <!DOCTYPE html>
 
-            <form id="createacostume" action= "">
-                Costume Name: <input type="text" name="cname"><br>
-                Head: <select name="head">
-                    <?php foreach ($heads as $head) { ?>
-                        <option value="<?php echo $head['id'] ?>"><?php echo $head['shopName'] . " - " . $head['pieceName'] ?></option>
-    <?php } ?>
-                </select><br>
-                Right Hand: <select name="rightHand">
-                    <?php foreach ($hands as $hand) { ?>
-                        <option value="<?php echo $hand['id'] ?>"><?php echo $hand['shopName'] . " - " . $hand['pieceName'] ?></option>
-    <?php } ?>
-                </select><br>
-                Left Hand: <select name="leftHand">
-                    <?php foreach ($hands as $hand) { ?>
-                        <option value="<?php echo $hand['id'] ?>"><?php echo $hand['shopName'] . " - " . $hand['pieceName'] ?></option>
-    <?php } ?>
-                </select><br>
-                Body: <select name="body">
-                    <?php foreach ($bodys as $body) { ?>
-                        <option value="<?php echo $body['id'] ?>"><?php echo $body['shopName'] . " - " . $body['pieceName'] ?></option>
-    <?php } ?>
-                </select><br>
-                Legs: <select name="legs">
-                    <?php foreach ($legs as $leg) { ?>
-                        <option value="<?php echo $leg['id'] ?>"><?php echo $leg['shopName'] . " - " . $leg['pieceName'] ?></option>
-    <?php } ?>
-                </select><br>
-                Feet: <select name="feet">
-                    <?php foreach ($feets as $feet) { ?>
-                        <option value="<?php echo $feet['id'] ?>"><?php echo $feet['shopName'] . " - " . $feet['pieceName'] ?></option>
-    <?php } ?>
-                </select>                <br>
-                <input type="submit" name="submit" class="button" id="submit_btn"/>
-            </form>
-           <!--<div id='spinner' class='spinner' style="display:none;">
+    <form id="createacostume" action= "">
+        Costume Name: <input type="text" name="cname"><br>
+        Head: <select name="head">
+            <?php foreach ($heads as $head) { ?>
+                <option value="<?php echo $head['id'] ?>"><?php echo $head['shopName'] . " - " . $head['pieceName'] ?></option>
+            <?php } ?>
+        </select><br>
+        Right Hand: <select name="rightHand">
+            <?php foreach ($hands as $hand) { ?>
+                <option value="<?php echo $hand['id'] ?>"><?php echo $hand['shopName'] . " - " . $hand['pieceName'] ?></option>
+            <?php } ?>
+        </select><br>
+        Left Hand: <select name="leftHand">
+            <?php foreach ($hands as $hand) { ?>
+                <option value="<?php echo $hand['id'] ?>"><?php echo $hand['shopName'] . " - " . $hand['pieceName'] ?></option>
+            <?php } ?>
+        </select><br>
+        Body: <select name="body">
+            <?php foreach ($bodys as $body) { ?>
+                <option value="<?php echo $body['id'] ?>"><?php echo $body['shopName'] . " - " . $body['pieceName'] ?></option>
+            <?php } ?>
+        </select><br>
+        Legs: <select name="legs">
+            <?php foreach ($legs as $leg) { ?>
+                <option value="<?php echo $leg['id'] ?>"><?php echo $leg['shopName'] . " - " . $leg['pieceName'] ?></option>
+            <?php } ?>
+        </select><br>
+        Feet: <select name="feet">
+            <?php foreach ($feets as $feet) { ?>
+                <option value="<?php echo $feet['id'] ?>"><?php echo $feet['shopName'] . " - " . $feet['pieceName'] ?></option>
+            <?php } ?>
+        </select>                <br>
+        <input type="submit" name="submit" class="button" id="submit_btn"/>
+    </form>
+    <!--<div id='spinner' class='spinner' style="display:none;">
     <img id="img-spinner" src="head.jpg" alt="Loading"/></div>-->
 
     <?php
@@ -270,11 +277,9 @@ function myAjaxFunction() {
     //TODO Get image locations from database and load them as image resourses
     //Load image resources
     //$file = imageCreateFromJPEG($hands['pictURL']);
-    if (substr($heads["pictUrl"], 0, 1) == "/")
-    {
-    $head_file = imageCreateFromJPEG(dirname(__FILE__) . $heads["pictUrl"]);
-    }
- else {
+    if (substr($heads["pictUrl"], 0, 1) == "/") {
+        $head_file = imageCreateFromJPEG(dirname(__FILE__) . $heads["pictUrl"]);
+    } else {
         $head_file = $heads["pictUrl"];
     }
     $background_file = imageCreateFromJPEG(dirname(__FILE__) . '/images/background.jpg');
@@ -323,7 +328,7 @@ function myAjaxFunction() {
     $body_y = intval(($background_height / 3) - ($body_height / 2));
 
     $feetx = intval(( $background_width / 2 ) - ( $feet_width / 2 ));
-    $feety = intval(( $background_height ) - ( $feet_height) -5);
+    $feety = intval(( $background_height ) - ( $feet_height) - 5);
 
     $legsx = intval(( $background_width / 2) - ( $legs_width / 2 ));
     $legsy = intval(( 2 * $background_height / 3 ) - ( $feet_height / 2 ));
@@ -331,7 +336,7 @@ function myAjaxFunction() {
     $left_handx = 5;
     $left_handy = intval(( $background_height / 2 ) - ( $left_hand_height / 2 ));
 
-    $right_handx = intval(( $background_width) - ( $right_hand_width ) -5);
+    $right_handx = intval(( $background_width) - ( $right_hand_width ) - 5);
     $right_handy = intval(( $background_height / 2 ) - ( $right_hand_height / 2 ));
 
     //Merg the images
@@ -386,12 +391,11 @@ Head position = ' . $head_position . '<br>
     $modified_post = array(
         'ID' => $post_id,
         'post_content' => $content,
-        
     );
 
     wp_update_post($modified_post);
-    
-    $url = strval('http://localhost/wp-admin/post.php?post='.$post_id.'&action=edit');
+
+    $url = strval('http://localhost/wp-admin/post.php?post=' . $post_id . '&action=edit');
 //    wp_redirect($url);
 
     die($url);
@@ -439,7 +443,7 @@ function register_plugin_styles() {
 function uploadAjaxFunction() {
     global $current_user;
     get_currentuserinfo();
-    
+
     global $table_prefix;
     $table_name = $table_prefix . "costumesdb";
     global $wpdb;
@@ -448,24 +452,24 @@ function uploadAjaxFunction() {
     $shopURL = $_POST['shopURL'];
     $pictURL = $_POST['pictURL'];
     $shopName = $current_user->display_name;
-    // This is not creating the folder
-    if (file_exists('\\images\\' . $shopName)) {
-        mkdir('\\images\\' . $shopName, 0777, true);
+    // Create the user folder if it does not exist
+    if (!file_exists('\\images\\' . $shopName . '\\')) {
+        mkdir('\\images\\' . $shopName . '\\', 0777, true);
     }
     // This is not copying the file. I think it is the If statement above.
-    copy($pictURL, dirname(__FILE__) . '\\images\\' . $shopName. '\\' . $pieceName . '_' . basename($pictURL));
+    copy($pictURL, dirname(__FILE__) . '\\images\\' . $shopName . '\\' . $pieceName . '_' . basename($pictURL));
     $result = $wpdb->insert($table_name, array('shopName' => $shopName,
         'pieceName' => $pieceName,
         'location' => $location,
         'shopURL' => $shopURL,
-        'pictURL' => '\\images\\' . $shopName. '\\' . $pieceName . '_' . basename($pictURL)), array(
+        'pictURL' => '\\images\\' . $shopName . '\\' . $pieceName . '_' . basename($pictURL)), array(
         '%s',
         '%s',
         '%s',
         '%s',
         '%s',
     ));
-    $toremove = $wpdb->get_results( 'SELECT * FROM wp_posts WHERE guid = '.$pictURL);
+    $toremove = $wpdb->get_results('SELECT * FROM wp_posts WHERE guid = ' . $pictURL);
     wp_delete_post($toremove);
 //    if ($result === FALSE) {
 //        die(0);
@@ -475,7 +479,40 @@ function uploadAjaxFunction() {
 // "Name $pieceName location $location Shop $shopName shopURL $shopURL pictURL $pictURL"
 //    add_piece_to_db($pieceName, $location, $shopURL, $pictURL);
 //    die($result);
-    die('I removed post with ID '.$toremove);
+    die('I removed post with ID ' . $toremove);
+}
+
+//Upload outside a function?
+    if (user_can_save($post_id, plugin_basename(__FILE__), 'example-jpg-nonce')) {
+
+        if (has_files_to_upload('example-jpg-file')) {
+            if (isset($_FILES['example-jpg-file'])) {
+                $file = wp_upload_bits($_FILES['example-jpg-file']['name'], null, @file_get_contents($_FILES['example-jpg-file']['tmp_name']));
+                if (FALSE === $file['error']) {
+// Delete the old file
+                    if ('' !== ( $fs_url = trim(get_post_meta($post_id, 'example-jpg-file-fs', true)) )) {
+                        unlink($fs_url);
+                    } // end if
+// Now update with a path to the new file URL and the filesystem path
+                    update_post_meta($post_id, 'example-jpg-file', $file['url']);
+                    update_post_meta($post_id, 'example-jpg-file-fs', $file['file']);
+                }
+            }
+        }
+    }
+
+// Helper functions
+function user_can_save($post_id, $plugin_file, $nonce) {
+
+    $is_autosave = wp_is_post_autosave($post_id);
+    $is_revision = wp_is_post_revision($post_id);
+    $is_valid_nonce = ( isset($_POST[$nonce]) && wp_verify_nonce($_POST[$nonce], $plugin_file) );
+// Return true if the user is able to save; otherwise, false.
+    return !( $is_autosave || $is_revision ) && $is_valid_nonce;
+}
+
+function has_files_to_upload($id) {
+    return (!empty($_FILES) ) && isset($_FILES[$id]);
 }
 
 //function add_piece_to_db($pieceName, $location, $shopURL, $pictURL) {
