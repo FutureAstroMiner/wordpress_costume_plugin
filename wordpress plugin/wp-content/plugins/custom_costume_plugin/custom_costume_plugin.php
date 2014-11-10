@@ -149,7 +149,8 @@ function customcostume_handle_upload() {
                     Select File To Upload:
                 </label>
                 <input type="file" id="example-jpg-file" name="example-jpg-file" value="" />
-                <?php wp_nonce_field(plugin_basename(__FILE__), 'example-jpg-nonce'); ?>
+                <?php wp_nonce_field(plugin_basename(__FILE__) . 'uploadAjaxFunction', 'example-jpg-nonce'); ?>
+                <input type="submit" name="submit" class="button" id="submit_btn"/>
             </p>
         </body>    </html> <?php
 }
@@ -443,7 +444,23 @@ function register_plugin_styles() {
 function uploadAjaxFunction() {
     global $current_user;
     get_currentuserinfo();
+    if (user_can_save(plugin_basename(__FILE__), 'example-jpg-nonce')) {
 
+        if (has_files_to_upload('example-jpg-file')) {
+            if (isset($_FILES['example-jpg-file'])) {
+                $file = wp_upload_bits($_FILES['example-jpg-file']['name'], null, @file_get_contents($_FILES['example-jpg-file']['tmp_name']));
+//                if (FALSE === $file['error']) {
+// Delete the old file
+//                    if ('' !== ( $fs_url = trim(get_post_meta($post_id, 'example-jpg-file-fs', true)) )) {
+//                        unlink($fs_url);
+//                    } // end if
+// Now update with a path to the new file URL and the filesystem path
+//                    update_post_meta($post_id, 'example-jpg-file', $file['url']);
+//                    update_post_meta($post_id, 'example-jpg-file-fs', $file['file']);
+//                }
+            }
+        }
+    }
     global $table_prefix;
     $table_name = $table_prefix . "costumesdb";
     global $wpdb;
@@ -483,32 +500,17 @@ function uploadAjaxFunction() {
 }
 
 //Upload outside a function?
-    if (user_can_save($post_id, plugin_basename(__FILE__), 'example-jpg-nonce')) {
 
-        if (has_files_to_upload('example-jpg-file')) {
-            if (isset($_FILES['example-jpg-file'])) {
-                $file = wp_upload_bits($_FILES['example-jpg-file']['name'], null, @file_get_contents($_FILES['example-jpg-file']['tmp_name']));
-                if (FALSE === $file['error']) {
-// Delete the old file
-                    if ('' !== ( $fs_url = trim(get_post_meta($post_id, 'example-jpg-file-fs', true)) )) {
-                        unlink($fs_url);
-                    } // end if
-// Now update with a path to the new file URL and the filesystem path
-                    update_post_meta($post_id, 'example-jpg-file', $file['url']);
-                    update_post_meta($post_id, 'example-jpg-file-fs', $file['file']);
-                }
-            }
-        }
-    }
 
 // Helper functions
-function user_can_save($post_id, $plugin_file, $nonce) {
+function user_can_save($plugin_file, $nonce) {
 
-    $is_autosave = wp_is_post_autosave($post_id);
-    $is_revision = wp_is_post_revision($post_id);
+//    $is_autosave = wp_is_post_autosave($post_id);
+//    $is_revision = wp_is_post_revision($post_id);
     $is_valid_nonce = ( isset($_POST[$nonce]) && wp_verify_nonce($_POST[$nonce], $plugin_file) );
 // Return true if the user is able to save; otherwise, false.
-    return !( $is_autosave || $is_revision ) && $is_valid_nonce;
+//    return !( $is_autosave || $is_revision ) && $is_valid_nonce;
+    return $is_valid_nonce;
 }
 
 function has_files_to_upload($id) {
