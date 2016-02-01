@@ -49,14 +49,6 @@ if (!defined('MYPLUGIN_PLUGIN_URL')) {
     define('MYPLUGIN_PLUGIN_URL', WP_PLUGIN_URL . '/' . MYPLUGIN_PLUGIN_NAME);
 }
 
-//global $cname;
-//global $head;
-//global $righthand;
-//global $lefthand;
-//global $body;
-//global $legs;
-//global $feet;
-//global $table_name;
 define($table_name, $wpdb->base_prefix . "costumesdb");
 
 register_activation_hook(__FILE__, 'on_activate');
@@ -170,7 +162,8 @@ function customcostume_posts_actions() {
     add_submenu_page('create_costume', 'Upload costume pieces', 'Upload', manage_options, 'upload_costume', 'customcostume_handle_upload');
 }
 
-function customcostume_posts() { // need to fill out options from database http://codex.wordpress.org/Class_Reference/wpdb
+function customcostume_posts() {
+// need to fill out options from database http://codex.wordpress.org/Class_Reference/wpdb
     global $wpdb;
 
     $heads = $wpdb->get_results("SELECT * FROM {$wpdb->prefix}costumesdb WHERE location = 'head'", ARRAY_A);
