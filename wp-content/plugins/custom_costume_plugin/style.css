@@ -1,0 +1,68 @@
+/* 
+
+*/
+//
+
+#costume { 
+    background-image :url('http://localhost/wp-content/plugins/custom_costume_plugin/images/background.jpg');
+    position: absolute;
+    background-attachment:fixed;
+    height: 1190px;
+    width: 1500px;
+    top: 400px;
+    background-repeat:no-repeat;
+}
+
+#lefthand {
+    position: absolute;
+    height: 38px;
+    width: 88px;
+    top: 400px; 
+    left: 600px;
+    text-decoration: none;
+}
+
+#righthand {
+    position: absolute;
+    height: 38px;
+    width: 88px;
+    top: 400px; 
+    left: 200px;
+    text-decoration: none;
+}
+
+#head {
+    position: absolute;
+    height: 38px;
+    width: 88px;
+    top: 31px;
+    left: 400px; 
+    text-decoration: none;
+}
+
+#chest {
+    position: absolute;
+    height: 38px;
+    width: 88px;
+    top: 200px; 
+    left: 400px;
+    text-decoration: none;
+}
+
+#legs {
+    position: absolute;
+    height: 38px;
+    width: 88px;
+    top: 600px; 
+    left: 400px;
+    text-decoration: none;
+}
+
+#feet {
+    position: absolute;
+    height: 38px;
+    width: 88px;
+    top: 800px; 
+    left: 400px;
+    text-decoration: none;
+}
