@@ -10,13 +10,18 @@
 function customcostume_posts() {
 // need to fill out options from database http://codex.wordpress.org/Class_Reference/wpdb
 	global $wpdb;
-	$heads = $wpdb->get_results( "SELECT * FROM {$wpdb->prefix}costumesdb WHERE location = 'head'", ARRAY_A );
-	$hands = $wpdb->get_results( "SELECT * FROM {$wpdb->prefix}costumesdb WHERE location = 'hand'", ARRAY_A );
-	$bodys = $wpdb->get_results( "SELECT * FROM {$wpdb->prefix}costumesdb WHERE location = 'body'", ARRAY_A );
-	$legs = $wpdb->get_results( "SELECT * FROM {$wpdb->prefix}costumesdb WHERE location = 'legs'", ARRAY_A );
-	$feets = $wpdb->get_results( "SELECT * FROM {$wpdb->prefix}costumesdb WHERE location = 'feet'", ARRAY_A );
+	$heads = $wpdb->get_results( "SELECT * FROM {$wpdb->prefix}piecesdb "
+	. "INNER JOIN {$wpdb->prefix}shopsdb AS s ON shop_id = s.id WHERE location = 'head'", ARRAY_A );
+	$hands = $wpdb->get_results( "SELECT * FROM {$wpdb->prefix}piecesdb "
+	. "INNER JOIN {$wpdb->prefix}shopsdb AS s ON shop_id = s.id WHERE location = 'hand'", ARRAY_A );
+	$bodys = $wpdb->get_results( "SELECT * FROM {$wpdb->prefix}piecesdb "
+	. "INNER JOIN {$wpdb->prefix}shopsdb AS s ON shop_id = s.id WHERE location = 'body'", ARRAY_A );
+	$legs = $wpdb->get_results( "SELECT * FROM {$wpdb->prefix}piecesdb "
+	. "INNER JOIN {$wpdb->prefix}shopsdb AS s ON shop_id = s.id WHERE location = 'legs'", ARRAY_A );
+	$feets = $wpdb->get_results( "SELECT * FROM {$wpdb->prefix}piecesdb "
+	. "INNER JOIN {$wpdb->prefix}shopsdb AS s ON shop_id = s.id WHERE location = 'feet'", ARRAY_A );
 	wp_reset_query();
-	echo $_GET["page"];
+//	echo $_GET["page"];
 	?>
 	<!DOCTYPE html>
 

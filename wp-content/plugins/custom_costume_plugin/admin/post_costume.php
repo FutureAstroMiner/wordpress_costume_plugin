@@ -13,12 +13,12 @@ function myAjaxFunction() {
 	$legs = (int) ( $_POST['legs'] );
 	$feet = (int) ( $_POST['feet'] );
 //    $test = filter_input(INPUT_POST, 'cname');
-	$heads = $wpdb->get_row( "SELECT * FROM {$wpdb->prefix}costumesdb WHERE id = '$head'", ARRAY_A );
-	$rhands = $wpdb->get_row( "SELECT * FROM {$wpdb->prefix}costumesdb WHERE id = '$righthand'", ARRAY_A );
-	$lhands = $wpdb->get_row( "SELECT * FROM {$wpdb->prefix}costumesdb WHERE id = '$lefthand'", ARRAY_A );
-	$bodys = $wpdb->get_row( "SELECT * FROM {$wpdb->prefix}costumesdb WHERE id = '$body'", ARRAY_A );
-	$legss = $wpdb->get_row( "SELECT * FROM {$wpdb->prefix}costumesdb WHERE id = '$legs'", ARRAY_A );
-	$feets = $wpdb->get_row( "SELECT * FROM {$wpdb->prefix}costumesdb WHERE id = '$feet'", ARRAY_A );
+	$heads = $wpdb->get_row( "SELECT * FROM {$wpdb->prefix}piecesdb WHERE id = '$head'", ARRAY_A );
+	$rhands = $wpdb->get_row( "SELECT * FROM {$wpdb->prefix}piecesdb WHERE id = '$righthand'", ARRAY_A );
+	$lhands = $wpdb->get_row( "SELECT * FROM {$wpdb->prefix}piecesdb WHERE id = '$lefthand'", ARRAY_A );
+	$bodys = $wpdb->get_row( "SELECT * FROM {$wpdb->prefix}piecesdb WHERE id = '$body'", ARRAY_A );
+	$legss = $wpdb->get_row( "SELECT * FROM {$wpdb->prefix}piecesdb WHERE id = '$legs'", ARRAY_A );
+	$feets = $wpdb->get_row( "SELECT * FROM {$wpdb->prefix}piecesdb WHERE id = '$feet'", ARRAY_A );
 	//Creating original post
 	$post = array(
 		'ping_status' => get_option( 'default_ping_status' ),
