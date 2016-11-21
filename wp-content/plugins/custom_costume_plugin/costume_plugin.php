@@ -100,7 +100,7 @@ function customcostume_posts_actions() {
 
 // add java script depending on if it is the upload or create page
 function add_myjavascript() {
-	wp_enqueue_script( 'spin.js', plugins_url() . "/custom_costume_plugin/spin.js", array( 'jquery' ) );
+//	wp_enqueue_script( 'spin.js', plugins_url() . "/custom_costume_plugin/spin.js", array( 'jquery' ) );
 	if ( $_GET["page"] == 'create_costume' ) {
 		wp_enqueue_script( 'ajax-implementation.js', plugins_url() . "/custom_costume_plugin/ajax-implementation.js", array( 'jquery' ) );
 	} else {

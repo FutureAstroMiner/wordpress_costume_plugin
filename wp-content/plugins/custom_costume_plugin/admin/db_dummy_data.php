@@ -116,11 +116,11 @@ function populate_db_callback() {
 	$table_name = $wpdb->prefix . "piecesdb";
 
 	dbDelta( "INSERT INTO $table_name (`id`, `pieceName`, `location`, `shop_id`, `pictUrl`) VALUES (NULL, 'head piece', 'head', '1', '/images/head.jpg')" );
-	dbDelta( "INSERT INTO $table_name (`id`, `pieceName`, `location`, `shop_id`, `pictUrl`) VALUES (NULL, 'body piece', 'body', '2', '/images/body.jpg')" );
-	dbDelta( "INSERT INTO $table_name (`id`, `pieceName`, `location`, `shop_id`, `pictUrl`) VALUES (NULL, 'legs piece', 'legs', '3', '/images/legs.jpg')" );
-	dbDelta( "INSERT INTO $table_name (`id`, `pieceName`, `location`, `shop_id`, `pictUrl`) VALUES (NULL, 'feet piece', 'feet', '4', '/images/feet.jpg')" );
-	dbDelta( "INSERT INTO $table_name (`id`, `pieceName`, `location`, `shop_id`, `pictUrl`) VALUES (NULL, 'lefthand piece', 'hand', '5', '/images/lefthand.jpg')" );
-	dbDelta( "INSERT INTO $table_name (`id`, `pieceName`, `location`, `shop_id`, `pictUrl`) VALUES (NULL, 'righthand piece', 'hand', '6', '/images/righthand.jpg')" );
+	dbDelta( "INSERT INTO $table_name (`id`, `pieceName`, `location`, `shop_id`, `pictUrl`) VALUES (NULL, 'body piece', 'body', '1', '/images/body.jpg')" );
+	dbDelta( "INSERT INTO $table_name (`id`, `pieceName`, `location`, `shop_id`, `pictUrl`) VALUES (NULL, 'legs piece', 'legs', '1', '/images/legs.jpg')" );
+	dbDelta( "INSERT INTO $table_name (`id`, `pieceName`, `location`, `shop_id`, `pictUrl`) VALUES (NULL, 'feet piece', 'feet', '1', '/images/feet.jpg')" );
+	dbDelta( "INSERT INTO $table_name (`id`, `pieceName`, `location`, `shop_id`, `pictUrl`) VALUES (NULL, 'lefthand piece', 'hand', '1', '/images/lefthand.jpg')" );
+	dbDelta( "INSERT INTO $table_name (`id`, `pieceName`, `location`, `shop_id`, `pictUrl`) VALUES (NULL, 'righthand piece', 'hand', '1', '/images/righthand.jpg')" );
 
 
 	$table_name = $wpdb->prefix . "shopsdb";

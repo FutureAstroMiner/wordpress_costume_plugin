@@ -27,4 +27,4 @@ if ( !defined( 'MYPLUGIN_PLUGIN_DIR' ) ) {
 if ( !defined( 'MYPLUGIN_PLUGIN_URL' ) ) {
 	define( 'MYPLUGIN_PLUGIN_URL', WP_PLUGIN_URL . '/' . MYPLUGIN_PLUGIN_NAME );
 }
-define( $table_name, $wpdb->base_prefix . "costumesdb" );
+//define( $table_name, $wpdb->base_prefix . "costumesdb" );
