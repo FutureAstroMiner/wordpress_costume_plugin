@@ -11,6 +11,7 @@ jQuery(document).ready(function() {
         var aForm = jQuery(this);
         var bForm = aForm.serializeArray();
         bForm.push({name: 'action', value: 'myAjaxFunction'});
+//        var form_data = bForm.serialize();
         jQuery.ajax({
             url: ajaxurl,
             type: "POST",
@@ -24,15 +25,21 @@ jQuery(document).ready(function() {
 
             },
             error: function( req, status, err ) {
-            	alert( 'something went wrong, Status: ' + status + ' and error: ' + err );
+            	alert( 'something went wrong, Status: ' + status + ' and error: '
+                        + err + " and req of " + req);
+                console.log("----------------------------------");
+                console.log(aForm.serialize());
+                console.log(bForm);
+                console.log("----------------------------------");
             }
         })
 //                .done(function(secResp) {
 //            alert("second response: " + secResp);
 //        })
-                .fail(function() {
-            alert("error");
-        })
+//                .fail(function() {
+//            alert("error");
+//        }
+//                )
         ;
         return false;
     });

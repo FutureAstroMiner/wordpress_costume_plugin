@@ -85,7 +85,7 @@ function my_admin_scripts() {
 	if ( isset( $_GET['page'] ) && $_GET['page'] == 'upload_costume' ) {
 		wp_enqueue_media();
 		wp_register_script( 'my-admin.js', WP_PLUGIN_URL . '/custom_costume_plugin/my-admin.js', array( 'jquery' ) );
-		wp_enqueue_script( 'my-admin.js' );
+		wp_enqueue_script( 'my-admin.js' ); //Cant find what this was ment to point to.
 	}
 }
 
@@ -102,19 +102,19 @@ function customcostume_posts_actions() {
 function add_myjavascript() {
 //	wp_enqueue_script( 'spin.js', plugins_url() . "/custom_costume_plugin/spin.js", array( 'jquery' ) );
 	if ( $_GET["page"] == 'create_costume' ) {
-		wp_enqueue_script( 'ajax-implementation.js', plugins_url() . "/custom_costume_plugin/ajax-implementation.js", array( 'jquery' ) );
+		wp_enqueue_script( 'ajax-implementation.js', WP_PLUGIN_DIR . "/custom_costume_plugin/ajax-implementation.js", array( 'jquery' ) );
 	} else {
-		wp_enqueue_script( 'ajax-upload.js', plugins_url() . "/custom_costume_plugin/ajax-upload.js", array( 'jquery' ) );
+		wp_enqueue_script( 'ajax-upload.js', WP_PLUGIN_DIR . "/custom_costume_plugin/ajax-upload.js", array( 'jquery' ) );
 	}
 }
 
-add_action( 'wp_print_scripts', 'add_myjavascript' );
+//add_action( 'wp_print_scripts', 'add_myjavascript' );
 
 
 
-// creating Ajax call for WordPress  
-add_action( 'wp_ajax_nopriv_myAjaxFunction', 'myAjaxFunction' );
-add_action( 'wp_ajax_myAjaxFunction', 'myAjaxFunction' );
+//// creating Ajax call for WordPress  
+//add_action( 'wp_ajax_nopriv_myAjaxFunction', 'myAjaxFunction' );
+//add_action( 'wp_ajax_myAjaxFunction', 'myAjaxFunction' );
 
 //Why load_jquery ???
 add_action( 'wp_enqueue_script', 'load_jquery' );
@@ -134,6 +134,7 @@ add_action( 'wp_enqueue_scripts', 'register_plugin_styles' );
  * Register style sheet.
  */
 function register_plugin_styles() {
+	//No used for anything just yet
 	wp_register_style( 'custom_costume_plugin', plugins_url() . 'custom_costume_plugin/style.css' );
 	wp_enqueue_style( 'custom_costume_plugin' );
 }

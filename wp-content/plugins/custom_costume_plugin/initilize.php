@@ -10,9 +10,10 @@ error_reporting(E_ALL);
 
 defined('DS') ? NULL : define('DS', DIRECTORY_SEPARATOR);
 
-//site root path in the filesystem
-//defined('SITE_ROOT') ? NULL :
-//define('SITE_ROOT', DS.'var'.DS.'www'.DS.'html'.DS.'danceSchool');
+//plugin root path in the filesystem
+defined('PLUGIN_ROOT') ? NULL :
+//define('PLUGIN_ROOT', ABSPATH. 'wp-content'.DS.'plugins'.DS.'custom_costume_plugin');
+define('PLUGIN_ROOT', WP_PLUGIN_DIR.DS.'custom_costume_plugin');
 
 //path to included files
 //defined('LIB_PATH') ? NULL : define('LIB_PATH', SITE_ROOT.DS.'includes');
