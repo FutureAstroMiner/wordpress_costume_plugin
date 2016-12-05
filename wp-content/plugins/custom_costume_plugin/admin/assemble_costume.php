@@ -125,8 +125,11 @@ function post_new_costume_callback() {
 	$feets = $wpdb->get_row( "SELECT * FROM {$wpdb->prefix}piecesdb WHERE id = '$feet'", ARRAY_A );
 
 	//What will be the next post id?
-	$post_id = $wpdb->query( "SELECT id FROM {$wpdb->prefix}posts ORDER BY ID DESC LIMIT 1" );
+	$latest_post = $wpdb->get_row( "SELECT * FROM {$wpdb->prefix}posts ORDER BY ID DESC LIMIT 1", ARRAY_A );
 
+	$post_id = $latest_post["ID"];
+	wp_die($post_id);
+	
 	$post_id++;
 
 	$wpdb->flush();
