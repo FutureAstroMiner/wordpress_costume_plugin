@@ -79,15 +79,15 @@ function customcostume_admin_actions() {
 }
 
 // register and enqueue scripts  for the upload page upload.php
-add_action( 'admin_enqueue_scripts', 'my_admin_scripts' );
+//add_action( 'admin_enqueue_scripts', 'my_admin_scripts' );
 
-function my_admin_scripts() {
-	if ( isset( $_GET['page'] ) && $_GET['page'] == 'upload_costume' ) {
-		wp_enqueue_media();
-		wp_register_script( 'my-admin.js', WP_PLUGIN_URL . '/custom_costume_plugin/my-admin.js', array( 'jquery' ) );
-		wp_enqueue_script( 'my-admin.js' ); //Cant find what this was ment to point to.
-	}
-}
+//function my_admin_scripts() {
+//	if ( isset( $_GET['page'] ) && $_GET['page'] == 'upload_costume' ) {
+//		wp_enqueue_media();
+//		wp_register_script( 'my-admin.js', WP_PLUGIN_URL . '/custom_costume_plugin/my-admin.js', array( 'jquery' ) );
+//		wp_enqueue_script( 'my-admin.js' ); //Cant find what this was ment to point to.
+//	}
+//}
 
 //creates menu pages in the menu bar
 // contained in assemble_costume.php and upload.php
